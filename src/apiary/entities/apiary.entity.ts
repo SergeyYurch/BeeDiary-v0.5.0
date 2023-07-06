@@ -1,6 +1,6 @@
-import { ApiaryType } from '../../../../domain/apiary';
+import { ApiaryType } from '../domain/apiary';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UserEntity } from '../../../../../account/features/users/entities/user.entity';
+import { UserEntity } from '../../account/features/users/entities/user.entity';
 
 @Entity('apiaries')
 export class ApiaryEntity {

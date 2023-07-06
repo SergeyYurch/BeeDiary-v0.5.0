@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ApiaryViewModel } from '../dto/view-models/apiary.view.model';
 import { Apiary } from '../../../domain/apiary';
-import { ApiaryEntity } from '../dto/entites/apiary.entity';
+import { ApiaryEntity } from '../../../entities/apiary.entity';
 import { UsersService } from '../../../../account/features/users/providers/users.service';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { ApiaryService } from '../apiary.service';
 import { DataSource, Repository } from 'typeorm';
-import { ApiaryEntity } from '../../dto/entites/apiary.entity';
+import { ApiaryEntity } from '../../../../entities/apiary.entity';
 import { PaginatorInputType } from '../../../../../common/dto/input-models/paginator.input.type';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
 import { ApiaryViewModel } from '../../dto/view-models/apiary.view.model';

@@ -1,7 +1,7 @@
 import { Apiary } from '../../../domain/apiary';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { ApiaryEntity } from '../dto/entites/apiary.entity';
+import { ApiaryEntity } from '../../../entities/apiary.entity';
 import { ApiaryQueryRepository } from './apiary.query.repository';
 
 export class ApiaryRepository {

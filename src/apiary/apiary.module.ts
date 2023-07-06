@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ApiaryService } from './features/apiaries/providers/apiary.service';
 import { ApiariesController } from './api/apiaries.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiaryEntity } from './features/apiaries/dto/entites/apiary.entity';
+import { ApiaryEntity } from './entities/apiary.entity';
 import { CreateApiaryUseCase } from './features/apiaries/providers/use-cases/create-apiary-use-case';
 import { ApiaryRepository } from './features/apiaries/providers/apiary.repository';
 import { ApiaryQueryRepository } from './features/apiaries/providers/apiary.query.repository';
