@@ -6,18 +6,17 @@ import { ApiaryService } from './apiary.service';
 import { PaginatorViewModel } from '../../../../common/dto/view-models/paginator.view.model';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';
 import { pagesCount } from '../../../../common/helpers/helpers';
-import { Apiary } from '../../../domain/apiary';
-import { UsersService } from '../../../../account/features/users/providers/users.service';
 import { NotificationResult } from '../../../../common/notification/notificationResult';
+import { ApiaryQueryRepositoryInterface } from './interfaces/apiaryQueryRepositoryInterface';
 
-export class ApiaryQueryRepository {
+export class ApiaryQueryRepository implements ApiaryQueryRepositoryInterface {
   constructor(
-    private readonly apiaryService: ApiaryService,
-    private readonly usersService: UsersService,
+    readonly apiaryService: ApiaryService,
     @InjectRepository(ApiaryEntity)
-    private readonly apiaryRepository: Repository<ApiaryEntity>,
-    @InjectDataSource() protected dataSource: DataSource,
+    readonly apiaryRepository: Repository<ApiaryEntity>,
+    @InjectDataSource() public dataSource: DataSource,
   ) {}
+
   async findEntityById(id: number) {
     return this.apiaryRepository.findOne({
       relations: { beekeeper: true },
@@ -25,17 +24,17 @@ export class ApiaryQueryRepository {
     });
   }
 
-  async findEntities(paginatorParams: PaginatorInputType, beekeeperId: number) {
+  async findAndCountEntities(
+    paginatorParams: PaginatorInputType,
+    beekeeperId: number,
+  ) {
     const { pageSize, pageNumber } = paginatorParams;
-    const res = await this.apiaryRepository.findAndCount({
+    return this.apiaryRepository.findAndCount({
       relations: { beekeeper: true },
       where: { beekeeperId },
       skip: pageSize * (pageNumber - 1),
       take: pageSize,
     });
-    console.log('t111');
-    console.log(res);
-    return res;
   }
 
   async getApiaryView(
@@ -43,10 +42,8 @@ export class ApiaryQueryRepository {
   ): Promise<NotificationResult<ApiaryViewModel>> {
     const notification = new NotificationResult<ApiaryViewModel>();
     try {
-      const apiaryEntity = await this.findEntityById(+apiaryId);
-      const apiaryView = await this.apiaryService.mapToApiaryView(
-        this.mapToDomainModel(apiaryEntity),
-      );
+      const apiary = await this.getApiary(+apiaryId);
+      const apiaryView = await this.apiaryService.mapToApiaryView(apiary);
       notification.addData(apiaryView);
       return notification;
     } catch (e) {
@@ -54,19 +51,19 @@ export class ApiaryQueryRepository {
     }
   }
 
-  async getAllApiary(
+  async getAllApiaryViews(
     paginatorParams: PaginatorInputType,
     userId: number,
   ): Promise<PaginatorViewModel<ApiaryViewModel>> {
     const { pageSize, pageNumber } = paginatorParams;
-    console.log('t55');
-    console.log(userId);
-    const [apiaryEntities, totalCount] = await this.findEntities(
+    const [apiaryEntities, totalCount] = await this.findAndCountEntities(
       paginatorParams,
       userId,
     );
     const items = apiaryEntities.map((a) =>
-      this.apiaryService.mapToApiaryView(this.mapToDomainModel(a)),
+      this.apiaryService.mapToApiaryView(
+        this.apiaryService.mapToDomainModel(a),
+      ),
     );
 
     return {
@@ -80,25 +77,10 @@ export class ApiaryQueryRepository {
 
   async getApiary(apiaryId: number) {
     const apiaryEntity = await this.findEntityById(apiaryId);
-    return this.mapToDomainModel(apiaryEntity);
+    return this.apiaryService.mapToDomainModel(apiaryEntity);
   }
 
-  private mapToDomainModel(apiaryEntity: ApiaryEntity) {
-    const apiary = new Apiary();
-    apiary.id = apiaryEntity.id;
-    apiary.beekeeper = this.usersService.mapToUserDomainModel(
-      apiaryEntity.beekeeper,
-    );
-    apiary.createdAt = apiaryEntity.createdAt;
-    apiary.note = apiaryEntity.note;
-    apiary.type = apiaryEntity.type;
-    apiary.location = apiaryEntity.location;
-    apiary.disbandedAt = apiaryEntity.disbandedAt;
-    apiary.schema = apiaryEntity.schema;
-    return apiary;
-  }
-
-  async doesPostIdExist(apiaryId: number) {
+  async doesApiaryIdExist(apiaryId: number) {
     try {
       const queryString = `SELECT EXISTS (SELECT * FROM apiaries a WHERE a.id=${apiaryId});`;
       const result = await this.dataSource.query(queryString);

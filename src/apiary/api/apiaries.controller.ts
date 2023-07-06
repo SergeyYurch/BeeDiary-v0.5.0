@@ -64,7 +64,10 @@ export class ApiariesController {
     @CurrentUserModel() user: User,
     @PaginatorParam() paginatorParams: PaginatorInputType,
   ) {
-    return this.apiaryQueryRepository.getAllApiary(paginatorParams, +user.id);
+    return this.apiaryQueryRepository.getAllApiaryViews(
+      paginatorParams,
+      +user.id,
+    );
   }
 
   @UseGuards(ApiaryOwnerGuard)

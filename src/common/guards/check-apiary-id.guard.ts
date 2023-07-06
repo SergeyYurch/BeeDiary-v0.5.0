@@ -16,10 +16,10 @@ export class CheckApiaryIdGuard implements CanActivate {
     const apiaryId = request.params.id;
     if (!Number.isInteger(+apiaryId)) throw new NotFoundException();
     if (+apiaryId < 0) throw new NotFoundException();
-    const postIdIsExist = await this.apiaryQueryRepository.doesPostIdExist(
+    const apiaryIdIsExist = await this.apiaryQueryRepository.doesApiaryIdExist(
       apiaryId,
     );
-    if (!postIdIsExist) {
+    if (!apiaryIdIsExist) {
       console.log('apiary not found, apiaryId does not exist');
       throw new NotFoundException();
     }
