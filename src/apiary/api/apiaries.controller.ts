@@ -1,17 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
+  BadRequestException,
   Body,
-  Param,
+  Controller,
   Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
   Put,
   UseGuards,
-  HttpStatus,
-  HttpCode,
-  BadRequestException,
 } from '@nestjs/common';
-import { ApiaryService } from '../features/apiaries/providers/apiary.service';
 import { CreateApiaryDto } from '../features/apiaries/dto/input/create-apiary.dto';
 import { UpdateApiaryDto } from '../features/apiaries/dto/input/update-apiary.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -29,22 +28,26 @@ import { DeleteApiaryCommand } from '../features/apiaries/providers/use-cases/de
 import { NotificationResult } from '../../common/notification/notificationResult';
 import { ApiaryViewModel } from '../features/apiaries/dto/view-models/apiary.view.model';
 import { ApiaryOwnerGuard } from '../guards/apiary-owner.guard';
+import { BaseControllerInterface } from '../../common/interfaces/baseControllerInterface';
+import { PaginatorViewModel } from '../../common/dto/view-models/paginator.view.model';
 
 @ApiTags('apiary')
 @UseGuards(AccessTokenUGuard)
 @Controller('apiaries')
-export class ApiariesController {
+export class ApiariesController
+  implements
+    BaseControllerInterface<CreateApiaryDto, UpdateApiaryDto, ApiaryViewModel>
+{
   constructor(
-    private readonly apiaryQueryRepository: ApiaryQueryRepository,
-    private readonly apiaryService: ApiaryService,
-    private commandBus: CommandBus,
+    private readonly queryRepository: ApiaryQueryRepository,
+    private readonly commandBus: CommandBus,
   ) {}
 
   @Post()
   async create(
     @Body() createApiaryDto: CreateApiaryDto,
     @CurrentUserModel() user: User,
-  ) {
+  ): Promise<ApiaryViewModel> {
     const resultOfCreate = await this.commandBus.execute<
       CreateApiaryCommand,
       NotificationResult<string>
@@ -52,9 +55,7 @@ export class ApiariesController {
     if (resultOfCreate.hasError())
       throw new BadRequestException(resultOfCreate);
     const apiaryId = resultOfCreate.data;
-    const resultOfView = await this.apiaryQueryRepository.getApiaryView(
-      apiaryId,
-    );
+    const resultOfView = await this.queryRepository.getApiaryView(apiaryId);
     if (!resultOfView.hasError()) return resultOfView.data;
     throw new BadRequestException(resultOfCreate);
   }
@@ -63,18 +64,15 @@ export class ApiariesController {
   async findAll(
     @CurrentUserModel() user: User,
     @PaginatorParam() paginatorParams: PaginatorInputType,
-  ) {
-    return this.apiaryQueryRepository.getAllApiaryViews(
-      paginatorParams,
-      +user.id,
-    );
+  ): Promise<PaginatorViewModel<ApiaryViewModel>> {
+    return this.queryRepository.getAllApiaryViews(paginatorParams, +user.id);
   }
 
   @UseGuards(ApiaryOwnerGuard)
   @UseGuards(CheckApiaryIdGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<ApiaryViewModel> {
-    const notification = await this.apiaryQueryRepository.getApiaryView(id);
+    const notification = await this.queryRepository.getApiaryView(id);
     if (notification.hasError()) throw new BadRequestException(notification);
     return notification.data;
   }
