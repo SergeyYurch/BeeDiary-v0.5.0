@@ -23,7 +23,7 @@ import { BanUserInputModel } from '../features/users/dto/input-models/ban -user-
 import { BanUserCommand } from '../features/users/providers/use-cases/ban-user-use-case';
 import { PaginatorInputType } from '../../common/dto/input-models/paginator.input.type';
 import { PaginatorParam } from '../../common/decorators/paginator-param.decorator';
-import { CheckUserIdBannedIncludeGuard } from '../../common/guards/check-user-id-banned-include.guard';
+import { CheckUserIdBannedIncludeGuard } from '../guards/check-user-id-banned-include.guard';
 import { UsersQueryTypeormRepository } from '../features/users/providers/users.query-typeorm.repository';
 import { User } from '../features/users/domain/user';
 import { ApiTags } from '@nestjs/swagger';

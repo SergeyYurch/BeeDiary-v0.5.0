@@ -8,7 +8,7 @@ import { BloggerCommentViewModel } from '../dto/view-models/blogger-comment.view
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, FindOptionsWhere, In, Repository } from 'typeorm';
 import { Comment } from '../domain/comment';
-import { LikeStatusType } from '../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from '../../likes/dto/like.input.model';
 import { CommentEntity } from '../entities/comment.entity';
 import { User } from '../../../../account/features/users/domain/user';
 import { UsersQueryTypeormRepository } from '../../../../account/features/users/providers/users.query-typeorm.repository';

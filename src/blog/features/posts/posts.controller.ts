@@ -10,15 +10,15 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { PaginatorInputType } from '../../../common/dto/input-models/paginator.input.type';
-import { LikeInputModel } from '../../../common/dto/input-models/like.input.model';
-import { AccessTokenGuard } from '../../../common/guards/access-token.guard';
+import { LikeInputModel } from '../likes/dto/like.input.model';
+import { AccessTokenGuard } from '../../../account/guards/access-token.guard';
 import { CommentInputModel } from '../comments/dto/comment-input.model';
 import { CommandBus } from '@nestjs/cqrs';
 import { UpdatePostLikeStatusCommand } from './providers/use-cases/update-post-like-status-use-case';
 import { CreateCommentCommand } from '../comments/providers/use-cases/create-comment-use-case';
-import { CurrentUserId } from '../../../common/decorators/current-user-id.param.decorator';
-import { UserBloggerBanGuard } from '../../../common/guards/user-blogger-ban.guard';
-import { CheckPostIdGuard } from '../../../common/guards/check-post-id.guard';
+import { CurrentUserId } from '../../../account/decorators/current-user-id.param.decorator';
+import { UserBloggerBanGuard } from '../../../account/guards/user-blogger-ban.guard';
+import { CheckPostIdGuard } from '../../guards/check-post-id.guard';
 import { PaginatorParam } from '../../../common/decorators/paginator-param.decorator';
 import { PostsQueryTypeOrmRepository } from './providers/posts.query.type-orm.repository';
 import { CommentsQueryTypeOrmRepository } from '../comments/providers/comments.query.type-orm.repository';

@@ -1,4 +1,4 @@
-import { LikeStatusType } from '../../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from '../../../likes/dto/like.input.model';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UsersQueryTypeormRepository } from '../../../../../account/features/users/providers/users.query-typeorm.repository';
 import { PostsTypeOrmRepository } from '../posts.type-orm.repository';

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { pagesCount } from '../../../../common/helpers/helpers';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';
 import { UserViewModel } from '../dto/view-models/user.view.model';
-import { MeViewModel } from '../../../../common/dto/view-models/me.view.model';
+import { MeViewModel } from '../dto/view-models/me.view.model';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import {
   DataSource,

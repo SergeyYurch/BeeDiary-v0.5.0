@@ -4,10 +4,10 @@ import {
   ExecutionContext,
   NotFoundException,
 } from '@nestjs/common';
-import { BlogsQueryTypeOrmRepository } from '../../blog/features/blogs/providers/blogs.query.type-orm.repository';
+import { BlogsQueryTypeOrmRepository } from '../features/blogs/providers/blogs.query.type-orm.repository';
 
 @Injectable()
-export class CheckBlogIdGuard implements CanActivate {
+export class CheckBlogIdGuardForSa implements CanActivate {
   constructor(private blogsQueryRepository: BlogsQueryTypeOrmRepository) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -16,7 +16,12 @@ export class CheckBlogIdGuard implements CanActivate {
     const blogId = request.params.blogId;
     if (!Number.isInteger(+blogId)) throw new NotFoundException();
     if (+blogId < 0) throw new NotFoundException();
-    if (!(await this.blogsQueryRepository.doesBlogIdExist(blogId))) {
+    if (
+      !(await this.blogsQueryRepository.doesBlogIdExist(blogId, {
+        bannedBlogInclude: true,
+        foSaChecking: true,
+      }))
+    ) {
       throw new NotFoundException();
     }
     return true;

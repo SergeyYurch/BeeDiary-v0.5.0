@@ -17,18 +17,18 @@ import { UpdateApiaryDto } from '../features/apiaries/dto/input/update-apiary.dt
 import { ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateApiaryCommand } from '../features/apiaries/providers/use-cases/create-apiary-use-case';
-import { AccessTokenUGuard } from '../../common/guards/access-token-u.guard';
+import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
 import { User } from '../../account/features/users/domain/user';
 import { ApiaryQueryRepository } from '../features/apiaries/providers/apiary.query.repository';
-import { CurrentUserModel } from '../../common/decorators/current-user-model.param.decorator';
+import { CurrentUserModel } from '../../account/decorators/current-user-model.param.decorator';
 import { PaginatorParam } from '../../common/decorators/paginator-param.decorator';
 import { PaginatorInputType } from '../../common/dto/input-models/paginator.input.type';
 import { UpdateApiaryCommand } from '../features/apiaries/providers/use-cases/update-apiary-use-case';
-import { CheckApiaryIdGuard } from '../../common/guards/check-apiary-id.guard';
+import { CheckApiaryIdGuard } from '../guards/check-apiary-id.guard';
 import { DeleteApiaryCommand } from '../features/apiaries/providers/use-cases/delete-apiary-use-case';
 import { NotificationResult } from '../../common/notification/notificationResult';
 import { ApiaryViewModel } from '../features/apiaries/dto/view-models/apiary.view.model';
-import { ApiaryOwnerGuard } from '../../common/guards/apiary-owner.guard';
+import { ApiaryOwnerGuard } from '../guards/apiary-owner.guard';
 
 @ApiTags('apiary')
 @UseGuards(AccessTokenUGuard)

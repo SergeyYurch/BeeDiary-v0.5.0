@@ -23,8 +23,8 @@ import { PaginatorInputType } from '../../../../common/dto/input-models/paginato
 import { BlogInputModel } from '../dto/input-models/blog.input.model';
 import { CreateNewBlogCommand } from '../providers/use-cases/create-new-blog-use-case';
 import { PaginatorParam } from '../../../../common/decorators/paginator-param.decorator';
-import { CheckUserIdGuard } from '../../../../common/guards/check-user-id.guard';
-import { CheckBlogIdGuardForSa } from '../../../../common/guards/check-blog-id-for-sa.guard';
+import { CheckUserIdGuard } from '../../../../account/guards/check-user-id.guard';
+import { CheckBlogIdGuardForSa } from '../../../guards/check-blog-id-for-sa.guard';
 import { BlogsQueryTypeOrmRepository } from '../providers/blogs.query.type-orm.repository';
 import { UsersQueryTypeormRepository } from '../../../../account/features/users/providers/users.query-typeorm.repository';
 import { ApiTags } from '@nestjs/swagger';

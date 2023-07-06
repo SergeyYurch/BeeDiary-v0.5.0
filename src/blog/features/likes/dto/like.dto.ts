@@ -1,4 +1,4 @@
-import { LikeStatusType } from '../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from './like.input.model';
 
 export class LikeDto {
   userId: string;

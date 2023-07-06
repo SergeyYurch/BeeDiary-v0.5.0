@@ -1,8 +1,8 @@
 import { PostCreateDto } from '../dto/post-create.dto';
 import { PostUpdateDto } from '../dto/post-update.dto';
-import { LikeDetailsViewModel } from '../../../../common/dto/view-models/like-details.view.model';
-import { LikesCountsType } from '../../../../common/types/likes-counts.type';
-import { LikesInfoType } from '../../../../common/types/likes-info.type';
+import { LikeDetailsViewModel } from '../../likes/dto/like-details.view.model';
+import { LikesCountsType } from '../../likes/types/likes-counts.type';
+import { LikesInfoType } from '../../likes/types/likes-info.type';
 import { Blog } from '../../blogs/domain/blog';
 import { User } from '../../../../account/features/users/domain/user';
 import { Like } from '../../likes/domain/like';

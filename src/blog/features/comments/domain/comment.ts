@@ -1,9 +1,9 @@
 import { CommentsLikeEntity } from './comments-like.entity';
-import { LikesCountsType } from '../../../../common/types/likes-counts.type';
-import { LikeType } from '../../../../common/types/like.type';
+import { LikesCountsType } from '../../likes/types/likes-counts.type';
+import { LikeType } from '../../likes/types/like.type';
 import { User } from '../../../../account/features/users/domain/user';
 import { Post } from '../../posts/domain/post';
-import { LikeStatusType } from '../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from '../../likes/dto/like.input.model';
 
 export class Comment {
   id: string;

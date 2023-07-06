@@ -4,10 +4,10 @@ import {
   ExecutionContext,
   NotFoundException,
 } from '@nestjs/common';
-import { UsersQueryTypeormRepository } from '../../account/features/users/providers/users.query-typeorm.repository';
+import { UsersQueryTypeormRepository } from '../features/users/providers/users.query-typeorm.repository';
 
 @Injectable()
-export class CheckUserIdBannedIncludeGuard implements CanActivate {
+export class CheckUserIdGuard implements CanActivate {
   constructor(private usersQueryRepository: UsersQueryTypeormRepository) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -16,11 +16,7 @@ export class CheckUserIdBannedIncludeGuard implements CanActivate {
     const userId = request.params.userId;
     if (!Number.isInteger(+userId)) throw new NotFoundException();
     if (+userId < 0) throw new NotFoundException();
-    if (
-      !(await this.usersQueryRepository.doesUserIdExist(userId, {
-        bannedInclude: true,
-      }))
-    ) {
+    if (!(await this.usersQueryRepository.doesUserIdExist(userId))) {
       throw new NotFoundException();
     }
     return true;

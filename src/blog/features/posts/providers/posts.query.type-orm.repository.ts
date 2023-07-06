@@ -10,7 +10,7 @@ import { PostEntity } from '../entities/post.entity';
 import { UsersQueryTypeormRepository } from '../../../../account/features/users/providers/users.query-typeorm.repository';
 import { BlogsQueryTypeOrmRepository } from '../../blogs/providers/blogs.query.type-orm.repository';
 import { LikeEntity } from '../../likes/entities/like.entity';
-import { LikeStatusType } from '../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from '../../likes/dto/like.input.model';
 import { UsersService } from '../../../../account/features/users/providers/users.service';
 
 @Injectable()

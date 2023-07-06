@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { LikeTargetIdType } from '../../../../common/types/like-target-id.type';
-import { LikesCountsType } from '../../../../common/types/likes-counts.type';
-import { LikeWithAddedAtType } from '../../../../common/types/like-with-added-at.type';
+import { LikeTargetIdType } from '../types/like-target-id.type';
+import { LikesCountsType } from '../types/likes-counts.type';
+import { LikeWithAddedAtType } from '../types/like-with-added-at.type';
 import { LikeSqlDataType } from '../../posts/types/likeSqlData.type';
 
 @Injectable()

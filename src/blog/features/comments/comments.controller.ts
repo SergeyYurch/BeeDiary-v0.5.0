@@ -9,16 +9,16 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { AccessTokenGuard } from '../../../common/guards/access-token.guard';
+import { AccessTokenGuard } from '../../../account/guards/access-token.guard';
 import { CommentInputModel } from './dto/comment-input.model';
-import { LikeInputModel } from '../../../common/dto/input-models/like.input.model';
+import { LikeInputModel } from '../likes/dto/like.input.model';
 import { CommandBus } from '@nestjs/cqrs';
 import { DeleteCommentCommand } from './providers/use-cases/delete-comment-use-case';
 import { UpdateCommentCommand } from './providers/use-cases/update-comment-use-case';
 import { UpdateLikeStatusCommand } from './providers/use-cases/update-like-status-use-case';
-import { CurrentUserId } from '../../../common/decorators/current-user-id.param.decorator';
-import { CheckCommentIdGuard } from '../../../common/guards/check-comment-id.guard';
-import { CommentOwnerGuard } from '../../../common/guards/comment-owner.guard';
+import { CurrentUserId } from '../../../account/decorators/current-user-id.param.decorator';
+import { CheckCommentIdGuard } from '../../guards/check-comment-id.guard';
+import { CommentOwnerGuard } from '../../guards/comment-owner.guard';
 import { CommentsQueryTypeOrmRepository } from './providers/comments.query.type-orm.repository';
 import { ApiTags } from '@nestjs/swagger';
 

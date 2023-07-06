@@ -12,12 +12,12 @@ import {
 import { CommandBus } from '@nestjs/cqrs';
 import { BloggerBanUserInputModel } from '../../../../account/features/users/dto/input-models/blogger-ban -user-input-model.dto';
 import { BloggerBanUserCommand } from '../providers/use-cases/blogger-ban-user-use-case';
-import { AccessTokenGuard } from '../../../../common/guards/access-token.guard';
+import { AccessTokenGuard } from '../../../../account/guards/access-token.guard';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';
-import { BlogOwnerGuard } from '../../../../common/guards/blog-owner.guard';
-import { CheckUserIdGuard } from '../../../../common/guards/check-user-id.guard';
+import { BlogOwnerGuard } from '../../../guards/blog-owner.guard';
+import { CheckUserIdGuard } from '../../../../account/guards/check-user-id.guard';
 import { PaginatorParam } from '../../../../common/decorators/paginator-param.decorator';
-import { CheckBlogIdGuard } from '../../../../common/guards/check-blog-id-guard.service';
+import { CheckBlogIdGuard } from '../../../guards/check-blog-id-guard.service';
 import { BlogsQueryTypeOrmRepository } from '../providers/blogs.query.type-orm.repository';
 import { ApiTags } from '@nestjs/swagger';
 

@@ -4,7 +4,7 @@ import {
   ExecutionContext,
   NotFoundException,
 } from '@nestjs/common';
-import { ApiaryQueryRepository } from '../../apiary/features/apiaries/providers/apiary.query.repository';
+import { ApiaryQueryRepository } from '../features/apiaries/providers/apiary.query.repository';
 
 @Injectable()
 export class CheckApiaryIdGuard implements CanActivate {

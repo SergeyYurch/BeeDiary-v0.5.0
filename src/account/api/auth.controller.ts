@@ -13,15 +13,15 @@ import {
 } from '@nestjs/common';
 import { LoginInputModel } from '../features/auth/dto/login.input.model';
 import { Response, Request } from 'express';
-import { AccessTokenGuard } from '../../common/guards/access-token.guard';
-import { RefreshTokenGuard } from '../../common/guards/refresh-token.guard';
+import { AccessTokenGuard } from '../guards/access-token.guard';
+import { RefreshTokenGuard } from '../guards/refresh-token.guard';
 import { UserInputModel } from '../features/users/dto/input-models/user-input-model';
 import { RegistrationConfirmationCodeInputModel } from '../features/auth/dto/registration-confirmation-code.input.model';
 import { RegistrationEmailResendingInputModel } from '../features/auth/dto/registration-email-resending.input.model';
 import { PasswordRecoveryInputModel } from '../features/auth/dto/password-recovery.input.model';
 import { NewPasswordRecoveryInputModel } from '../features/auth/dto/new-password-recovery.input.model';
 import { SkipThrottle, ThrottlerGuard } from '@nestjs/throttler';
-import { CurrentUserJwtInfo } from '../../common/decorators/current-user.param.decorator';
+import { CurrentUserJwtInfo } from '../decorators/current-user.param.decorator';
 import { JwtPayloadType } from '../../blog/features/blogs/types/jwt-payload.type';
 import { CommandBus } from '@nestjs/cqrs';
 import { SignInCommand } from '../features/auth/providers/use-cases/sign-in-use-case';

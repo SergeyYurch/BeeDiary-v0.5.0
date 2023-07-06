@@ -6,7 +6,7 @@ import { pagesCount } from '../../../../common/helpers/helpers';
 import { Post, PostDocument } from '../mongo-shema/post.schema';
 import { PostViewModel } from '../dto/view-models/post.view.model';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';
-import { LikeStatusType } from '../../../../common/dto/input-models/like.input.model';
+import { LikeStatusType } from '../../likes/dto/like.input.model';
 
 @Injectable()
 export class PostsQueryRepository {

@@ -8,15 +8,15 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { SecurityService } from '../features/security/providers/security.service';
-import { RefreshTokenGuard } from '../../common/guards/refresh-token.guard';
+import { RefreshTokenGuard } from '../guards/refresh-token.guard';
 import { Request } from 'express';
-import { CurrentUserJwtInfo } from '../../common/decorators/current-user.param.decorator';
+import { CurrentUserJwtInfo } from '../decorators/current-user.param.decorator';
 import { JwtPayloadType } from '../../blog/features/blogs/types/jwt-payload.type';
 import { CommandBus } from '@nestjs/cqrs';
 import { GetSessionsByUserIdCommand } from '../features/security/providers/use-cases/get-sessions-by-user-id.use-case';
 import { DeleteAllSessionExcludeCurrentCommand } from '../features/security/providers/use-cases/delete-all-sessions-exclude-current.use-case';
 import { DeleteSessionByIdCommand } from '../features/security/providers/use-cases/delete-session-by-id.use-case';
-import { CheckDeviceIdGuard } from '../../common/guards/check-device-id.guard';
+import { CheckDeviceIdGuard } from '../guards/check-device-id.guard';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('security')

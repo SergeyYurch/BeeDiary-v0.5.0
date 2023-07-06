@@ -27,7 +27,7 @@ import { UsersService } from './features/users/providers/users.service';
 import { RefreshTokenStrategy } from './strategies/refresh-token.strategy';
 import { tokenService } from './features/auth/providers/token.service';
 import { LocalStrategy } from './strategies/local.strategy';
-import { IsUniqLoginOrEmailConstraint } from '../common/validators/login-or-emai-uniq-validate';
+import { IsUniqLoginOrEmailConstraint } from './validators/login-or-emai-uniq-validate';
 import { UsersQueryTypeormRepository } from './features/users/providers/users.query-typeorm.repository';
 import { SecurityService } from './features/security/providers/security.service';
 import { BasicStrategy } from './strategies/auth-basic.strategy';
