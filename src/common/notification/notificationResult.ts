@@ -8,12 +8,20 @@ export class NotificationResult<T = null> {
   hasError() {
     return this.code !== NotificationCodesEnum.OK;
   }
-  addError(message: string, key?: string | null, code?: number | null) {
+  addError(message: string, code?: number | null, key?: string | null) {
     this.code = code ?? NotificationCodesEnum.ERROR;
     const extension = new NotificationExtension(message, key);
     this.extensions.push(extension);
   }
   addData(data: T) {
     this.data = data;
+  }
+  static ok() {
+    return new NotificationResult<null>();
+  }
+  static err(message: string, code?: number | null, key?: string | null) {
+    const notificationResult = new NotificationResult<string>();
+    notificationResult.addError(message, code, key);
+    return notificationResult;
   }
 }
