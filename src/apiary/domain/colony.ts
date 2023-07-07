@@ -1,6 +1,6 @@
 import { BaseDomain } from './base-domain.class';
-import { Hive } from '../types/hive';
-import { Frame } from '../types/frame';
+import { Hive } from './hive';
+import { Frame } from './frame';
 import { Queen } from './queen';
 import { DangerStatusEnum } from '../types/danger-status.enum';
 
