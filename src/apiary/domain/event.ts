@@ -12,8 +12,4 @@ export class Event extends BaseDomain {
   content: string;
   audio: string[];
   pictures: string[];
-
-  constructor() {
-    super();
-  }
 }
