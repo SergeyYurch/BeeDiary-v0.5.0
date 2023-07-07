@@ -6,6 +6,7 @@ import { BreedViewModel } from '../dto/view-models/breed.view.model';
 export class BreedService {
   getViewModel(breed: Breed): BreedViewModel {
     return {
+      id: breed.id,
       title: breed.title,
     };
   }

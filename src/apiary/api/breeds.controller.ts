@@ -7,6 +7,9 @@ import {
   Delete,
   Put,
   BadRequestException,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { BaseControllerInterface } from '../../common/interfaces/baseControllerInterface';
 import { PaginatorViewModel } from '../../common/dto/view-models/paginator.view.model';
@@ -24,7 +27,13 @@ import { BreedQueryRepository } from '../features/breeds/providers/breed.query.r
 import { BreedService } from '../features/breeds/providers/breed.service';
 import { UpdateBreedCommand } from '../features/breeds/providers/use-cases/update-breed-use-case';
 import { DeleteBreedCommand } from '../features/breeds/providers/use-cases/delete-breed-use-case';
+import { CheckBreedIdGuard } from '../guards/check-breed-id.guard';
+import { ApiTags } from '@nestjs/swagger';
+import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
+import { BreedOwnerGuard } from '../guards/breed-owner.guard';
 
+@ApiTags('breed')
+@UseGuards(AccessTokenUGuard)
 @Controller('breeds')
 export class BreedsController
   implements
@@ -35,12 +44,14 @@ export class BreedsController
     private readonly breedQueryRepository: BreedQueryRepository,
     private readonly breedService: BreedService,
   ) {}
+
   @Post()
   async create(
     @Body() createBreedDto: CreateBreedDto,
+    @CurrentUserModel() user: User,
   ): Promise<BreedViewModel> {
     const notificationRes: NotificationResult = await this.commandBus.execute(
-      new CreateBreedCommand(createBreedDto),
+      new CreateBreedCommand(createBreedDto, user),
     );
     if (notificationRes.hasError()) throw new BadRequestException();
     const breadId = notificationRes.data;
@@ -48,6 +59,7 @@ export class BreedsController
     return this.breedService.getViewModel(breed);
   }
 
+  @UseGuards(BreedOwnerGuard)
   @Get()
   async findAll(
     @CurrentUserModel() user: User,
@@ -56,6 +68,8 @@ export class BreedsController
     return;
   }
 
+  @UseGuards(BreedOwnerGuard)
+  @UseGuards(CheckBreedIdGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<BreedViewModel> {
     const breed = await this.breedQueryRepository.getBreed(id);
@@ -63,6 +77,9 @@ export class BreedsController
     return this.breedService.getViewModel(breed);
   }
 
+  @UseGuards(BreedOwnerGuard)
+  @UseGuards(CheckBreedIdGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -74,6 +91,9 @@ export class BreedsController
     if (notificationRes.hasError()) throw new BadRequestException();
   }
 
+  @UseGuards(BreedOwnerGuard)
+  @UseGuards(CheckBreedIdGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const notificationRes: NotificationResult = await this.commandBus.execute(

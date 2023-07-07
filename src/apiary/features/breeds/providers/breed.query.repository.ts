@@ -12,6 +12,7 @@ export class BreedQueryRepository {
 
   async findEntityById(id: number) {
     return this.breedEntityRepository.findOne({
+      relations: { beekeeper: true },
       where: { id },
     });
   }
@@ -32,6 +33,7 @@ export class BreedQueryRepository {
   async getBreed(id: string) {
     const entity: BreedEntity = await this.findEntityById(+id);
     if (!entity) return null;
+    console.log('Breed entity', entity);
     return entity.toDomain();
   }
 
@@ -44,5 +46,11 @@ export class BreedQueryRepository {
       console.log(e);
       throw new Error('Database query error');
     }
+  }
+
+  async isOwner(userId: string, id: string) {
+    const queryString = `SELECT b."beekeeperId"=${+userId} as "isOwner" FROM breeds b WHERE b.id=${+id};`;
+    const result = await this.dataSource.query(queryString);
+    return result[0].isOwner;
   }
 }
