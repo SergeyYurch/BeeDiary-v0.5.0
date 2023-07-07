@@ -16,6 +16,8 @@ import { BreedService } from './features/breeds/providers/breed.service';
 import { CreateBreedUseCase } from './features/breeds/providers/use-cases/create-breed-use-case';
 import { UpdateBreedUseCase } from './features/breeds/providers/use-cases/update-breed-use-case';
 import { DeleteBreedUseCase } from './features/breeds/providers/use-cases/delete-breed-use-case';
+import { BreedEntity } from './entities/breed.entity';
+import { BreedsController } from './api/breeds.controller';
 
 const apiaryProviders = [
   ApiaryService,
@@ -35,11 +37,11 @@ const breedProviders = [
 ];
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ApiaryEntity]),
+    TypeOrmModule.forFeature([ApiaryEntity, BreedEntity]),
     CqrsModule,
     AccountModule,
   ],
-  controllers: [ApiariesController],
+  controllers: [ApiariesController, BreedsController],
   providers: [...apiaryProviders, ...breedProviders],
 })
 export class ApiaryModule {}
