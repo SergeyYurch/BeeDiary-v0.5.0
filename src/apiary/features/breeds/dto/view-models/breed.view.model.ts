@@ -1,3 +1,3 @@
 export class BreedViewModel {
-  breed: string;
+  title: string;
 }

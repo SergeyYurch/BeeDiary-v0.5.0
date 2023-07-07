@@ -4,5 +4,5 @@ import { IsString } from 'class-validator';
 export class UpdateBreedDto {
   @ApiProperty()
   @IsString()
-  breed: string;
+  title: string;
 }
