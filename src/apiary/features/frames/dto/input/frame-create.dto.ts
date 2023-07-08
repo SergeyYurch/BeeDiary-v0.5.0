@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsPositive, IsString } from 'class-validator';
 
-export class FrameUpdateInputDto {
+export class FrameCreateDto {
   @ApiProperty()
   @IsString()
   type: string;
