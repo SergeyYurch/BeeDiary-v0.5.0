@@ -18,6 +18,11 @@ import { UpdateBreedUseCase } from './features/breeds/providers/use-cases/update
 import { DeleteBreedUseCase } from './features/breeds/providers/use-cases/delete-breed-use-case';
 import { BreedEntity } from './entities/breed.entity';
 import { BreedsController } from './api/breeds.controller';
+import { FrameRepository } from './features/frames/providers/frame.repository';
+import { FrameQueryRepository } from './features/frames/providers/frame.query.repository';
+import { FrameCreateUseCase } from './features/frames/providers/use-cases/frame-create-use-case';
+import { FrameUpdateUseCase } from './features/frames/providers/use-cases/frame-update-use-case';
+import { FrameDeleteUseCase } from './features/frames/providers/use-cases/frame-delete-use-case';
 
 const apiaryProviders = [
   ApiaryService,
@@ -35,6 +40,14 @@ const breedProviders = [
   UpdateBreedUseCase,
   DeleteBreedUseCase,
 ];
+
+const frameProviders = [
+  FrameRepository,
+  FrameQueryRepository,
+  FrameCreateUseCase,
+  FrameUpdateUseCase,
+  FrameDeleteUseCase,
+];
 @Module({
   imports: [
     TypeOrmModule.forFeature([ApiaryEntity, BreedEntity]),
@@ -42,6 +55,6 @@ const breedProviders = [
     AccountModule,
   ],
   controllers: [ApiariesController, BreedsController],
-  providers: [...apiaryProviders, ...breedProviders],
+  providers: [...apiaryProviders, ...breedProviders, ...frameProviders],
 })
 export class ApiaryModule {}
