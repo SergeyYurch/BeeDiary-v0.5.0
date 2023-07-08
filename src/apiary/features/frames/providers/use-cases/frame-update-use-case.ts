@@ -20,7 +20,7 @@ export class FrameUpdateUseCase implements ICommandHandler<FrameUpdateCommand> {
   ): Promise<NotificationResult<string>> {
     const notification = new NotificationResult<string>();
     const { updateDto, id } = command;
-    const frame = await this.frameQueryRepository.getFrame(id);
+    const frame = await this.frameQueryRepository.getDomainModel(id);
     if (!frame) {
       notification.addError('Frame did not found');
       return notification;
