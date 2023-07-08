@@ -46,6 +46,7 @@ export class Frame extends BaseDomain {
     } else {
       frame.cellsNumber = 0;
     }
+    return frame;
   }
 
   update(updateDto: FrameUpdateDto) {
