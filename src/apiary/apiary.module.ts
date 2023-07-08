@@ -24,6 +24,7 @@ import { FrameCreateUseCase } from './features/frames/providers/use-cases/frame-
 import { FrameUpdateUseCase } from './features/frames/providers/use-cases/frame-update-use-case';
 import { FrameDeleteUseCase } from './features/frames/providers/use-cases/frame-delete-use-case';
 import { FrameService } from './features/frames/providers/frame.service';
+import { FrameEntity } from './entities/frame.entity';
 
 const apiaryProviders = [
   ApiaryService,
@@ -52,7 +53,7 @@ const frameProviders = [
 ];
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ApiaryEntity, BreedEntity]),
+    TypeOrmModule.forFeature([ApiaryEntity, BreedEntity, FrameEntity]),
     CqrsModule,
     AccountModule,
   ],
