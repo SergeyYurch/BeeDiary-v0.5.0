@@ -4,6 +4,8 @@ import { FrameEntity } from '../../../entities/frame.entity';
 import { BaseQueryRepository } from './base.query.repository';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';
 import { Frame } from '../../../domain/frame';
+import { pagesCount } from '../../../../common/helpers/helpers';
+import { PaginatorViewModel } from '../../../../common/dto/view-models/paginator.view.model';
 
 export class FrameQueryRepository extends BaseQueryRepository {
   constructor(
@@ -21,22 +23,22 @@ export class FrameQueryRepository extends BaseQueryRepository {
     });
   }
 
-  async getAllDomainModels(paginatorParams: PaginatorInputType): Promise<{
-    pageNumber: number;
-    pageSize: number;
-    count: number;
-    breeds: Frame[];
-  }> {
+  async getAllDomainModels(
+    paginatorParams: PaginatorInputType,
+    userId: string,
+  ): Promise<PaginatorViewModel<Frame>> {
     const { pageSize, pageNumber } = paginatorParams;
-    const [entities, count] = await this.entityRepository.findAndCount({
+    const [entities, totalCount] = await this.entityRepository.findAndCount({
+      where: { beekeeperId: +userId },
       skip: pageSize * (pageNumber - 1),
       take: pageSize,
     });
     return {
-      pageNumber,
+      pagesCount: pagesCount(totalCount, pageSize),
+      page: pageNumber,
       pageSize,
-      count,
-      breeds: entities.map((e) => e.toDomain()),
+      totalCount,
+      items: entities.map((e) => e.toDomain()),
     };
   }
 

@@ -59,13 +59,12 @@ export class FramesController
     return this.service.getViewModel(domainModel);
   }
 
-  @UseGuards(FrameOwnerGuard)
   @Get()
   async findAll(
     @CurrentUserModel() user: User,
     @PaginatorParam() paginatorParams: PaginatorInputType,
   ): Promise<PaginatorViewModel<FrameViewModel>> {
-    return;
+    return this.queryRepository.getAllDomainModels(paginatorParams, user.id);
   }
 
   @UseGuards(FrameOwnerGuard)
