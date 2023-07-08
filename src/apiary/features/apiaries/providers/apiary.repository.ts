@@ -14,7 +14,9 @@ export class ApiaryRepository {
     let apiaryEntity: ApiaryEntity;
     if (!apiary.id) apiaryEntity = new ApiaryEntity();
     if (apiary.id)
-      apiaryEntity = await this.apiaryQueryRepository.findEntityById(apiary.id);
+      apiaryEntity = await this.apiaryQueryRepository.findEntityById(
+        +apiary.id,
+      );
     apiaryEntity.createdAt = apiary.createdAt;
     apiaryEntity.type = apiary.type;
     apiaryEntity.location = apiary.location;

@@ -23,7 +23,7 @@ export class ApiaryService {
   }
   mapToDomainModel(apiaryEntity: ApiaryEntity) {
     const apiary = new Apiary();
-    apiary.id = apiaryEntity.id;
+    apiary.id = apiaryEntity.id.toString();
     apiary.beekeeper = this.usersService.mapToUserDomainModel(
       apiaryEntity.beekeeper,
     );

@@ -1,5 +1,5 @@
 export abstract class BaseDomain {
-  id: number;
+  id: string;
   createdAt: Date;
   protected constructor() {
     this.createdAt = new Date();
