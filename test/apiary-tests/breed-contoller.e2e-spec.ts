@@ -4,7 +4,7 @@ import { disconnect } from 'mongoose';
 import { getApp } from '../test-utils';
 import { PrepareTestHelpers } from '../helpers/prepaire.test.helpers';
 import { ApiaryTestHelpers } from './apiary.test-helpers';
-import { BreedViewModel } from '../../src/apiary/features/breeds/dto/view-models/breed.view.model';
+import { BreedViewModel } from '../../src/apiary/features/breeds/dto/view/breed.view.model';
 
 describe('breeds-controller (e2e)', () => {
   let app: INestApplication;

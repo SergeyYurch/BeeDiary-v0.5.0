@@ -20,7 +20,7 @@ import { CurrentUserModel } from '../../account/decorators/current-user-model.pa
 import { PaginatorParam } from '../../common/decorators/paginator-param.decorator';
 import { CreateBreedDto } from '../features/breeds/dto/input/create-breed.dto';
 import { UpdateBreedDto } from '../features/breeds/dto/input/update-breed.dto';
-import { BreedViewModel } from '../features/breeds/dto/view-models/breed.view.model';
+import { BreedViewModel } from '../features/breeds/dto/view/breed.view.model';
 import { CreateBreedCommand } from '../features/breeds/providers/use-cases/create-breed-use-case';
 import { NotificationResult } from '../../common/notification/notificationResult';
 import { BreedQueryRepository } from '../features/breeds/providers/breed.query.repository';

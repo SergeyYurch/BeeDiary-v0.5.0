@@ -1,7 +1,7 @@
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ApiaryEntity } from '../../../entities/apiary.entity';
-import { ApiaryViewModel } from '../dto/view-models/apiary.view.model';
+import { ApiaryViewModel } from '../dto/view/apiary.view.model';
 import { ApiaryService } from './apiary.service';
 import { PaginatorViewModel } from '../../../../common/dto/view-models/paginator.view.model';
 import { PaginatorInputType } from '../../../../common/dto/input-models/paginator.input.type';

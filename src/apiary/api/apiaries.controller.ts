@@ -26,7 +26,7 @@ import { UpdateApiaryCommand } from '../features/apiaries/providers/use-cases/up
 import { CheckApiaryIdGuard } from '../guards/check-apiary-id.guard';
 import { DeleteApiaryCommand } from '../features/apiaries/providers/use-cases/delete-apiary-use-case';
 import { NotificationResult } from '../../common/notification/notificationResult';
-import { ApiaryViewModel } from '../features/apiaries/dto/view-models/apiary.view.model';
+import { ApiaryViewModel } from '../features/apiaries/dto/view/apiary.view.model';
 import { ApiaryOwnerGuard } from '../guards/apiary-owner.guard';
 import { BaseControllerInterface } from '../../common/interfaces/baseControllerInterface';
 import { PaginatorViewModel } from '../../common/dto/view-models/paginator.view.model';

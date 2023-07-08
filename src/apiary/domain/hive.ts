@@ -1,6 +1,7 @@
 import { Frame } from './frame';
+import { BaseDomain } from '../../common/decorators/base-domain.class';
 
-export class Hive {
+export class Hive extends BaseDomain {
   id: number;
   type: string;
   frameNumber: number;
@@ -8,4 +9,8 @@ export class Hive {
   width: number;
   long: number;
   height: number;
+  constructor() {
+    super();
+  }
+  static create();
 }

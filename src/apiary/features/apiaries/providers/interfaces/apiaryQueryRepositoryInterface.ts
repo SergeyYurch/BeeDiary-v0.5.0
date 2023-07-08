@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { ApiaryEntity } from '../../../../entities/apiary.entity';
 import { PaginatorInputType } from '../../../../../common/dto/input-models/paginator.input.type';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
-import { ApiaryViewModel } from '../../dto/view-models/apiary.view.model';
+import { ApiaryViewModel } from '../../dto/view/apiary.view.model';
 import { PaginatorViewModel } from '../../../../../common/dto/view-models/paginator.view.model';
 import { Apiary } from '../../../../domain/apiary';
 

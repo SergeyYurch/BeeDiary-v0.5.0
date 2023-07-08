@@ -1,7 +1,7 @@
 // import { PostCreateDto } from '../dto/post-create.dto';
 // import { PostUpdateDto } from '../dto/post-update.dto';
 // import { LikeType } from '../../common/types/like.type';
-// import { LikeDetailsViewModel } from '../../common/dto/view-models/like-details.view.model';
+// import { LikeDetailsViewModel } from '../../common/dto/view/like-details.view.model';
 // import { LikeDto } from '../../common/dto/like.dto';
 // import { LikesCountsType } from '../../common/types/likes-counts.type';
 // import { LikesInfoType } from '../../common/types/likes-info.type';

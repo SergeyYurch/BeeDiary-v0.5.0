@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Breed } from '../../../domain/breed';
-import { BreedViewModel } from '../dto/view-models/breed.view.model';
+import { BreedViewModel } from '../dto/view/breed.view.model';
 
 @Injectable()
 export class BreedService {
