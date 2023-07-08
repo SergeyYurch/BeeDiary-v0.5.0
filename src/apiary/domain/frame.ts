@@ -1,17 +1,20 @@
 import { BaseDomain } from '../../common/decorators/base-domain.class';
 import { FrameCreateDto } from '../features/frames/dto/input/frame-create.dto';
 import { FrameUpdateDto } from '../features/frames/dto/input/frame-update.dto';
+import { User } from '../../account/features/users/domain/user';
 
 export class Frame extends BaseDomain {
   type: string;
   width: number;
   height: number;
   cellsNumber: number;
+  beekeeper: User;
   constructor() {
     super();
   }
-  static create(inputDto: FrameCreateDto) {
+  static create(inputDto: FrameCreateDto, user: User) {
     const frame = new Frame();
+    frame.beekeeper = user;
     frame.type = inputDto.type ?? 'unknown';
 
     if (
