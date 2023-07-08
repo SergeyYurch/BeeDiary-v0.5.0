@@ -1,6 +1,6 @@
 export class FrameViewModel {
   id: string;
-  createdAt: Date;
+  createdAt: string;
   type: string;
   width: number;
   height: number;

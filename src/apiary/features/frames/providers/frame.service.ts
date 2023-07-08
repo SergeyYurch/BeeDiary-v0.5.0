@@ -5,7 +5,7 @@ export class FrameService {
   getViewModel(domainModel: Frame): FrameViewModel {
     return {
       id: domainModel.id,
-      createdAt: domainModel.createdAt,
+      createdAt: domainModel.createdAt.toISOString(),
       type: domainModel.type,
       width: domainModel.width,
       height: domainModel.height,

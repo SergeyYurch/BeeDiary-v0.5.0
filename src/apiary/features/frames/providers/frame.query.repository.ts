@@ -6,12 +6,15 @@ import { PaginatorInputType } from '../../../../common/dto/input-models/paginato
 import { Frame } from '../../../domain/frame';
 import { pagesCount } from '../../../../common/helpers/helpers';
 import { PaginatorViewModel } from '../../../../common/dto/view-models/paginator.view.model';
+import { FrameService } from './frame.service';
+import { FrameViewModel } from '../dto/view/frame.view.model';
 
 export class FrameQueryRepository extends BaseQueryRepository {
   constructor(
     @InjectRepository(FrameEntity)
     private readonly entityRepository: Repository<FrameEntity>,
     @InjectDataSource() private readonly dataSource: DataSource,
+    private readonly service: FrameService,
   ) {
     super();
   }
@@ -26,19 +29,21 @@ export class FrameQueryRepository extends BaseQueryRepository {
   async getAllDomainModels(
     paginatorParams: PaginatorInputType,
     userId: string,
-  ): Promise<PaginatorViewModel<Frame>> {
+  ): Promise<PaginatorViewModel<FrameViewModel>> {
     const { pageSize, pageNumber } = paginatorParams;
     const [entities, totalCount] = await this.entityRepository.findAndCount({
       where: { beekeeperId: +userId },
       skip: pageSize * (pageNumber - 1),
       take: pageSize,
     });
+    const frames = entities.map((e) => e.toDomain());
+    const items = frames.map((f) => this.service.getViewModel(f));
     return {
       pagesCount: pagesCount(totalCount, pageSize),
       page: pageNumber,
       pageSize,
       totalCount,
-      items: entities.map((e) => e.toDomain()),
+      items,
     };
   }
 
