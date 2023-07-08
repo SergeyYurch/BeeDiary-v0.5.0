@@ -1,7 +1,7 @@
 import { EventType } from '../types/event-type';
 import { DangerStatusEnum } from '../types/danger-status.enum';
 import { Colony } from './colony';
-import { BaseDomain } from './base-domain.class';
+import { BaseDomain } from '../../common/decorators/base-domain.class';
 
 export class Event extends BaseDomain {
   type: EventType;

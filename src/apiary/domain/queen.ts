@@ -1,4 +1,4 @@
-import { BaseDomain } from './base-domain.class';
+import { BaseDomain } from '../../common/decorators/base-domain.class';
 import { Breed } from './breed';
 import { Grafting } from './grafting';
 

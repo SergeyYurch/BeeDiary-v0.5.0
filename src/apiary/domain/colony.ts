@@ -1,4 +1,4 @@
-import { BaseDomain } from './base-domain.class';
+import { BaseDomain } from '../../common/decorators/base-domain.class';
 import { Hive } from './hive';
 import { Frame } from './frame';
 import { Queen } from './queen';
