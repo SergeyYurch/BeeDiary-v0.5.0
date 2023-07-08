@@ -6,20 +6,20 @@ import { FrameEntity } from '../../../entities/frame.entity';
 export class FrameQueryRepository {
   constructor(
     @InjectRepository(FrameEntity)
-    private readonly frameEntityRepository: Repository<FrameEntity>,
+    private readonly entityRepository: Repository<FrameEntity>,
     @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   async findEntityById(id: number) {
-    return this.frameEntityRepository.findOne({
+    return this.entityRepository.findOne({
       relations: { beekeeper: true },
       where: { id },
     });
   }
 
-  async getAllBreeds(paginatorParams: PaginatorInputType) {
+  async getAllDomainModels(paginatorParams: PaginatorInputType) {
     const { pageSize, pageNumber } = paginatorParams;
-    const [entities, count] = await this.frameEntityRepository.findAndCount({
+    const [entities, count] = await this.entityRepository.findAndCount({
       skip: pageSize * (pageNumber - 1),
       take: pageSize,
     });
@@ -30,10 +30,9 @@ export class FrameQueryRepository {
       breeds: entities.map((e) => e.toDomain()),
     };
   }
-  async getFrame(id: string) {
+  async getDomainModel(id: string) {
     const entity: FrameEntity = await this.findEntityById(+id);
     if (!entity) return null;
-    console.log('Frame entity', entity);
     return entity.toDomain();
   }
 
