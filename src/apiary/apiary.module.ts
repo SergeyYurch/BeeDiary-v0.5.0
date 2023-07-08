@@ -23,6 +23,7 @@ import { FrameQueryRepository } from './features/frames/providers/frame.query.re
 import { FrameCreateUseCase } from './features/frames/providers/use-cases/frame-create-use-case';
 import { FrameUpdateUseCase } from './features/frames/providers/use-cases/frame-update-use-case';
 import { FrameDeleteUseCase } from './features/frames/providers/use-cases/frame-delete-use-case';
+import { FrameService } from './features/frames/providers/frame.service';
 
 const apiaryProviders = [
   ApiaryService,
@@ -47,6 +48,7 @@ const frameProviders = [
   FrameCreateUseCase,
   FrameUpdateUseCase,
   FrameDeleteUseCase,
+  FrameService,
 ];
 @Module({
   imports: [
