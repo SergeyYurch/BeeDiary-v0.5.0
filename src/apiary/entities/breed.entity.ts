@@ -8,6 +8,8 @@ export class BreedEntity {
   id: number;
   @Column()
   title: string;
+  @Column()
+  createdAt: Date;
   @ManyToOne(() => UserEntity)
   beekeeper: UserEntity;
   @Column()
@@ -17,6 +19,7 @@ export class BreedEntity {
     const breed = new Breed();
     breed.id = this.id.toString();
     breed.title = this.title;
+    breed.createdAt = this.createdAt;
     breed.beekeeper = this.beekeeper.toDomain();
     return breed;
   }
