@@ -2,7 +2,7 @@ import { FrameViewModel } from '../dto/view/frame.view.model';
 import { Frame } from '../../../domain/frame';
 
 export class FrameService {
-  mapToViewModel(domainModel: Frame): FrameViewModel {
+  getViewModel(domainModel: Frame): FrameViewModel {
     return {
       id: domainModel.id,
       createdAt: domainModel.createdAt,
