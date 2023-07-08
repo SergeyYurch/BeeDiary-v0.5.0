@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsPositive, IsString } from 'class-validator';
+import { IsInt, IsString, Min } from 'class-validator';
 
 export class FrameUpdateDto {
   @ApiProperty()
@@ -7,17 +7,17 @@ export class FrameUpdateDto {
   type: string;
 
   @ApiProperty()
-  @IsPositive()
+  @Min(0)
   @IsInt()
   width: number;
 
   @ApiProperty()
-  @IsPositive()
+  @Min(0)
   @IsInt()
   height: number;
 
   @ApiProperty()
-  @IsPositive()
+  @Min(0)
   @IsInt()
   cellsNumber: number;
 }
