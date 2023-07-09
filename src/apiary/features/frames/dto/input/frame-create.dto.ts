@@ -19,5 +19,5 @@ export class FrameCreateDto {
   @ApiProperty()
   @Min(0)
   @IsInt()
-  cellsNumber: number;
+  numberOfCells: number;
 }

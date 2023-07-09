@@ -4,5 +4,5 @@ export class FrameViewModel {
   type: string;
   width: number;
   height: number;
-  cellsNumber: number;
+  numberOfCells: number;
 }

@@ -49,7 +49,7 @@ export class ApiaryTestHelpers {
   generateFrameCreateDto(n: number): FrameCreateDto {
     return {
       type: `Dadan${n}`,
-      cellsNumber: 9000,
+      numberOfCells: 9000,
       height: 300,
       width: 435,
     };

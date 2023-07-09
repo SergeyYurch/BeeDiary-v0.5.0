@@ -19,5 +19,5 @@ export class FrameUpdateDto {
   @ApiProperty()
   @Min(0)
   @IsInt()
-  cellsNumber: number;
+  numberOfCells: number;
 }

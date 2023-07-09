@@ -38,11 +38,11 @@ export class Frame extends BaseDomain {
     }
 
     if (
-      inputDto.cellsNumber &&
-      Number.isInteger(inputDto.cellsNumber) &&
-      inputDto.cellsNumber > 0
+      inputDto.numberOfCells &&
+      Number.isInteger(inputDto.numberOfCells) &&
+      inputDto.numberOfCells > 0
     ) {
-      frame.numberOfCells = inputDto.cellsNumber;
+      frame.numberOfCells = inputDto.numberOfCells;
     } else {
       frame.numberOfCells = 0;
     }
@@ -73,11 +73,11 @@ export class Frame extends BaseDomain {
     }
 
     if (
-      updateDto.cellsNumber &&
-      Number.isInteger(updateDto.cellsNumber) &&
-      updateDto.cellsNumber > 0
+      updateDto.numberOfCells &&
+      Number.isInteger(updateDto.numberOfCells) &&
+      updateDto.numberOfCells > 0
     ) {
-      this.numberOfCells = updateDto.cellsNumber;
+      this.numberOfCells = updateDto.numberOfCells;
     } else {
       this.numberOfCells = 0;
     }
