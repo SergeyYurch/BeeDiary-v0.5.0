@@ -5,6 +5,7 @@ import request from 'supertest';
 import { CreateColonyDto } from '../../src/apiary/features/colonies/dto/input/create-colony.dto';
 import { CreateQueenDto } from '../../src/apiary/features/queens/dto/input/create-queen.dto';
 import { CreateBreedDto } from '../../src/apiary/features/breeds/dto/input/create-breed.dto';
+import { FrameCreateDto } from '../../src/apiary/features/frames/dto/input/frame-create.dto';
 
 export class ApiaryTestHelpers {
   constructor(private app: INestApplication) {}
@@ -17,6 +18,7 @@ export class ApiaryTestHelpers {
       location: 'address test',
     };
   }
+
   generateCreateColonyDto(n, queenId): CreateColonyDto {
     return {
       number: n,
@@ -28,19 +30,39 @@ export class ApiaryTestHelpers {
     };
   }
 
-  generateCreateQueenDto(n): CreateQueenDto {
+  generateCreateQueenDto(n: number): CreateQueenDto {
     return {
-      bread: 'Buckfast',
+      bread: `Buckfast${n}`,
       yearOfBirth: 2023,
       monthOfFlyby: 5,
       note: 'note',
       condition: 5,
     };
   }
+
   generateCreateBreedDto(n): CreateBreedDto {
     return {
       title: `breed ${n}`,
     };
+  }
+
+  generateFrameCreateDto(n: number): FrameCreateDto {
+    return {
+      type: `Dadan${n}`,
+      cellsNumber: 9000,
+      height: 300,
+      width: 435,
+    };
+  }
+
+  async createFrame(accessToken: string, n: number) {
+    const createDto = this.generateFrameCreateDto(n);
+    const { body } = await request(this.app.getHttpServer())
+      .post('/frames')
+      .auth(accessToken, { type: 'bearer' })
+      .send(createDto)
+      .expect(HttpStatus.CREATED);
+    return body;
   }
 
   async createBreed(accessToken: string, n: number) {
