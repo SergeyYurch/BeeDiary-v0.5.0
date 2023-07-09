@@ -30,7 +30,7 @@ import { FrameService } from '../features/frames/providers/frame.service';
 import { FrameUpdateCommand } from '../features/frames/providers/use-cases/frame-update-use-case';
 import { FrameDeleteCommand } from '../features/frames/providers/use-cases/frame-delete-use-case';
 import { FrameOwnerGuard } from '../features/frames/guards/frame-owner.guard';
-import { CheckFrameIdGuard } from '../features/frames/guards/check-frame-id.guard';
+import { FrameIdGuard } from '../features/frames/guards/frame-id.guard';
 
 @ApiTags('frames')
 @UseGuards(AccessTokenUGuard)
@@ -69,7 +69,7 @@ export class FramesController
   }
 
   @UseGuards(FrameOwnerGuard)
-  @UseGuards(CheckFrameIdGuard)
+  @UseGuards(FrameIdGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<FrameViewModel> {
     const domainModel = await this.queryRepository.getDomainModel(id);
@@ -78,7 +78,7 @@ export class FramesController
   }
 
   @UseGuards(FrameOwnerGuard)
-  @UseGuards(CheckFrameIdGuard)
+  @UseGuards(FrameIdGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateDto: FrameUpdateDto) {
@@ -89,7 +89,7 @@ export class FramesController
   }
 
   @UseGuards(FrameOwnerGuard)
-  @UseGuards(CheckFrameIdGuard)
+  @UseGuards(FrameIdGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async remove(@Param('id') id: string) {
