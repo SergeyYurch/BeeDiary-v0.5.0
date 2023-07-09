@@ -27,35 +27,11 @@ export class Frame extends BaseDomain {
 
   update(updateDto: FrameUpdateDto) {
     this.type = updateDto.type ?? 'unknown';
-
-    if (
-      updateDto.width &&
-      Number.isInteger(updateDto.width) &&
-      updateDto.width > 0
-    ) {
-      this.width = updateDto.width;
-    } else {
-      this.width = 0;
-    }
-
-    if (
-      updateDto.height &&
-      Number.isInteger(updateDto.height) &&
-      updateDto.height > 0
-    ) {
-      this.height = updateDto.height;
-    } else {
-      this.height = 0;
-    }
-
-    if (
-      updateDto.numberOfCells &&
-      Number.isInteger(updateDto.numberOfCells) &&
-      updateDto.numberOfCells > 0
-    ) {
-      this.numberOfCells = updateDto.numberOfCells;
-    } else {
-      this.numberOfCells = 0;
-    }
+    this.type = updateDto.type ?? 'unknown';
+    this.width = isPositiveInt(updateDto.width) ? updateDto.width : 0;
+    this.height = isPositiveInt(updateDto.height) ? updateDto.height : 0;
+    this.numberOfCells = isPositiveInt(updateDto.numberOfCells)
+      ? updateDto.numberOfCells
+      : 0;
   }
 }
