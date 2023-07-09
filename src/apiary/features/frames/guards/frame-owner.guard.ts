@@ -3,4 +3,8 @@ import { OwnerGuard } from '../../../../common/guards/owner.guard';
 import { FrameQueryRepository } from '../providers/frame.query.repository';
 
 @Injectable()
-export class FrameOwnerGuard extends OwnerGuard<FrameQueryRepository> {}
+export class FrameOwnerGuard extends OwnerGuard<FrameQueryRepository> {
+  constructor(queryRepository: FrameQueryRepository) {
+    super(queryRepository);
+  }
+}

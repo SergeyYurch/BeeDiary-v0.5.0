@@ -23,13 +23,13 @@ export class FrameEntity {
 
   toDomain(): Frame {
     const frame = new Frame();
-    frame.id = this.id.toString();
+    frame.id = this.id?.toString();
     frame.createdAt = this.createdAt;
     frame.type = this.type;
     frame.width = this.width;
     frame.height = this.height;
     frame.cellsNumber = this.cellsNumber;
-    frame.beekeeper = this.beekeeper.toDomain();
+    frame.beekeeper = this.beekeeper?.toDomain();
     return frame;
   }
 }

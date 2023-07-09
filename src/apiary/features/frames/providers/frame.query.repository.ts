@@ -32,6 +32,7 @@ export class FrameQueryRepository extends BaseQueryRepository {
   ): Promise<PaginatorViewModel<FrameViewModel>> {
     const { pageSize, pageNumber } = paginatorParams;
     const [entities, totalCount] = await this.entityRepository.findAndCount({
+      relations: { beekeeper: true },
       where: { beekeeperId: +userId },
       skip: pageSize * (pageNumber - 1),
       take: pageSize,

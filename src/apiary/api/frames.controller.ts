@@ -50,6 +50,7 @@ export class FramesController
     @Body() createDto: FrameCreateDto,
     @CurrentUserModel() user: User,
   ): Promise<FrameViewModel> {
+    console.log('[FramesController]:POST');
     const notificationRes: NotificationResult = await this.commandBus.execute(
       new FrameCreateCommand(createDto, user),
     );

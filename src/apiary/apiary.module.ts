@@ -25,6 +25,7 @@ import { FrameUpdateUseCase } from './features/frames/providers/use-cases/frame-
 import { FrameDeleteUseCase } from './features/frames/providers/use-cases/frame-delete-use-case';
 import { FrameService } from './features/frames/providers/frame.service';
 import { FrameEntity } from './entities/frame.entity';
+import { FramesController } from './api/frames.controller';
 
 const apiaryProviders = [
   ApiaryService,
@@ -57,7 +58,7 @@ const frameProviders = [
     CqrsModule,
     AccountModule,
   ],
-  controllers: [ApiariesController, BreedsController],
+  controllers: [ApiariesController, BreedsController, FramesController],
   providers: [...apiaryProviders, ...breedProviders, ...frameProviders],
 })
 export class ApiaryModule {}
