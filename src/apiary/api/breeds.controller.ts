@@ -27,10 +27,10 @@ import { BreedQueryRepository } from '../features/breeds/providers/breed.query.r
 import { BreedService } from '../features/breeds/providers/breed.service';
 import { UpdateBreedCommand } from '../features/breeds/providers/use-cases/update-breed-use-case';
 import { DeleteBreedCommand } from '../features/breeds/providers/use-cases/delete-breed-use-case';
-import { CheckBreedIdGuard } from '../guards/check-breed-id.guard';
+import { BreedIdGuard } from '../features/breeds/guards/breed-id.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
-import { BreedOwnerGuard } from '../guards/breed-owner.guard';
+import { BreedOwnerGuard } from '../features/breeds/guards/breed-owner.guard';
 
 @ApiTags('breed')
 @UseGuards(AccessTokenUGuard)
@@ -69,7 +69,7 @@ export class BreedsController
   }
 
   @UseGuards(BreedOwnerGuard)
-  @UseGuards(CheckBreedIdGuard)
+  @UseGuards(BreedIdGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<BreedViewModel> {
     const breed = await this.breedQueryRepository.getBreed(id);
@@ -78,7 +78,7 @@ export class BreedsController
   }
 
   @UseGuards(BreedOwnerGuard)
-  @UseGuards(CheckBreedIdGuard)
+  @UseGuards(BreedIdGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Put(':id')
   async update(
@@ -92,7 +92,7 @@ export class BreedsController
   }
 
   @UseGuards(BreedOwnerGuard)
-  @UseGuards(CheckBreedIdGuard)
+  @UseGuards(BreedIdGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async remove(@Param('id') id: string) {
