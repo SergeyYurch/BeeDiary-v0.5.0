@@ -7,13 +7,13 @@ import {
 import { BaseQueryRepository } from '../../apiary/features/frames/providers/base.query.repository';
 
 @Injectable()
-export class CheckIdGuard<QueryRepositoryT extends BaseQueryRepository>
+export class IdGuard<QueryRepositoryT extends BaseQueryRepository>
   implements CanActivate
 {
   constructor(private queryRepository: QueryRepositoryT) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('CheckIdGuard');
+    console.log('IdGuard');
     const request = context.switchToHttp().getRequest();
     const id = request.params.id;
     if (!Number.isInteger(+id)) throw new NotFoundException();
