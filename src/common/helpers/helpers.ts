@@ -16,3 +16,5 @@ export const delay = async (ms: number) => {
     setTimeout(() => resolve(), ms);
   });
 };
+
+export const isPositiveInt = (n: number) => n && Number.isInteger(n) && n > 0;
