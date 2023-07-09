@@ -18,7 +18,7 @@ export class FrameRepository {
     frameEntity.type = frame.type;
     frameEntity.width = frame.width;
     frameEntity.height = frame.height;
-    frameEntity.cellsNumber = frame.cellsNumber;
+    frameEntity.cellsNumber = frame.numberOfCells;
     frameEntity.beekeeperId = +frame.beekeeper.id;
     await this.frameEntityRepository.save(frameEntity);
     return frameEntity.id.toString();

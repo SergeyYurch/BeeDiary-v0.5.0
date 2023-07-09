@@ -28,7 +28,7 @@ export class FrameEntity {
     frame.type = this.type;
     frame.width = this.width;
     frame.height = this.height;
-    frame.cellsNumber = this.cellsNumber;
+    frame.numberOfCells = this.cellsNumber;
     frame.beekeeper = this.beekeeper?.toDomain();
     return frame;
   }

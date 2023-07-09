@@ -9,7 +9,7 @@ export class FrameService {
       type: domainModel.type,
       width: domainModel.width,
       height: domainModel.height,
-      cellsNumber: domainModel.cellsNumber,
+      cellsNumber: domainModel.numberOfCells,
     };
   }
 }

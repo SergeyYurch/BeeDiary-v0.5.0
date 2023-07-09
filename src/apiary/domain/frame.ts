@@ -7,7 +7,7 @@ export class Frame extends BaseDomain {
   type: string;
   width: number;
   height: number;
-  cellsNumber: number;
+  numberOfCells: number;
   beekeeper: User;
   constructor() {
     super();
@@ -42,9 +42,9 @@ export class Frame extends BaseDomain {
       Number.isInteger(inputDto.cellsNumber) &&
       inputDto.cellsNumber > 0
     ) {
-      frame.cellsNumber = inputDto.cellsNumber;
+      frame.numberOfCells = inputDto.cellsNumber;
     } else {
-      frame.cellsNumber = 0;
+      frame.numberOfCells = 0;
     }
     return frame;
   }
@@ -77,9 +77,9 @@ export class Frame extends BaseDomain {
       Number.isInteger(updateDto.cellsNumber) &&
       updateDto.cellsNumber > 0
     ) {
-      this.cellsNumber = updateDto.cellsNumber;
+      this.numberOfCells = updateDto.cellsNumber;
     } else {
-      this.cellsNumber = 0;
+      this.numberOfCells = 0;
     }
   }
 }
