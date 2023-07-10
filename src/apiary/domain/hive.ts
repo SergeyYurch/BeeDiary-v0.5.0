@@ -13,6 +13,9 @@ export class Hive extends BaseDomain {
   numberOfFrames: number;
   frameType: Frame;
   beekeeper: User;
+  constructor() {
+    super();
+  }
   static create(inputDto: HiveCreateDto, user: User, frame: Frame) {
     const hive = new Hive();
     hive.beekeeper = user;
