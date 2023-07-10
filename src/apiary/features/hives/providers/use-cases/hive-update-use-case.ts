@@ -1,32 +1,32 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
-import { FrameCreateDto } from '../../dto/input/frame-create.dto';
-import { FrameRepository } from '../frame.repository';
-import { FrameQueryRepository } from '../frame.query.repository';
+import { HiveUpdateDto } from '../../dto/input/hive.update.dto';
+import { HiveRepository } from '../hive.repository';
+import { HiveQueryRepository } from '../hive.query.repository';
 
-export class FrameUpdateCommand {
-  constructor(public updateDto: FrameCreateDto, public id: string) {}
+export class HiveUpdateCommand {
+  constructor(public updateDto: HiveUpdateDto, public id: string) {}
 }
 
-@CommandHandler(FrameUpdateCommand)
-export class HiveUpdateUseCase implements ICommandHandler<FrameUpdateCommand> {
+@CommandHandler(HiveUpdateCommand)
+export class HiveUpdateUseCase implements ICommandHandler<HiveUpdateCommand> {
   constructor(
-    private frameRepository: FrameRepository,
-    private frameQueryRepository: FrameQueryRepository,
+    private repository: HiveRepository,
+    private queryRepository: HiveQueryRepository,
   ) {}
 
   async execute(
-    command: FrameUpdateCommand,
+    command: HiveUpdateCommand,
   ): Promise<NotificationResult<string>> {
     const notification = new NotificationResult<string>();
     const { updateDto, id } = command;
-    const frame = await this.frameQueryRepository.getDomainModel(id);
-    if (!frame) {
-      notification.addError('Frame did not found');
+    const hive = await this.queryRepository.getDomainModel(id);
+    if (!hive) {
+      notification.addError('Hive did not found');
       return notification;
     }
-    frame.update(updateDto);
-    const result = await this.frameRepository.save(frame);
+    hive.update(updateDto);
+    const result = await this.repository.save(hive);
     if (result) {
       notification.addData(result);
     } else {
