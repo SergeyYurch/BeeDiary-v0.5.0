@@ -27,6 +27,7 @@ export class Hive extends BaseDomain {
     hive.numberOfFrames = isPositiveInt(inputDto.numberOfFrames)
       ? inputDto.numberOfFrames
       : 0;
+    return hive;
   }
   update(updateDto: HiveUpdateDto, frame?: Frame) {
     if (frame) this.frameType = frame;
