@@ -22,7 +22,7 @@ export class HiveRepository {
     hiveEntity.numberOfFrames = hive.numberOfFrames;
     hiveEntity.beekeeperId = +hive.beekeeper.id;
     hiveEntity.frameTypeId = +hive.frameType?.id || null;
-    console.log('hiveEntity', hiveEntity);
+    if (hive.frameType === null) hiveEntity.frameType = null;
     await this.entityRepository.save(hiveEntity);
     return hiveEntity.id.toString();
   }

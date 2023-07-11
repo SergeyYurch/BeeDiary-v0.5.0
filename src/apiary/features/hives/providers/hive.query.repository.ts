@@ -66,7 +66,7 @@ export class HiveQueryRepository extends BaseQueryRepository {
   }
 
   async isOwner(userId: string, id: string): Promise<boolean> {
-    const queryString = `SELECT h."beekeeperId"=${+userId} as "isOwner" FROM haves h WHERE h.id=${+id};`;
+    const queryString = `SELECT h."beekeeperId"=${+userId} as "isOwner" FROM hives h WHERE h.id=${+id};`;
     const result = await this.dataSource.query(queryString);
     return result[0].isOwner;
   }

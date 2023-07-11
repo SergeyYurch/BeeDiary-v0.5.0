@@ -85,7 +85,10 @@ export class HiveController
     const notificationRes: NotificationResult = await this.commandBus.execute(
       new HiveUpdateCommand(updateDto, id),
     );
-    if (notificationRes.hasError()) throw new BadRequestException();
+    if (notificationRes.hasError()) {
+      console.error('notificationRes extensions:', notificationRes.extensions);
+      throw new BadRequestException();
+    }
   }
 
   @UseGuards(HiveOwnerGuard)

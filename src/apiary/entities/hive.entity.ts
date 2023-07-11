@@ -3,7 +3,7 @@ import { UserEntity } from '../../account/features/users/entities/user.entity';
 import { FrameEntity } from './frame.entity';
 import { Hive } from '../domain/hive';
 
-@Entity('haves')
+@Entity('hives')
 export class HiveEntity {
   @PrimaryGeneratedColumn()
   id: number;

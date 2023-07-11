@@ -3,6 +3,8 @@ import { NotificationResult } from '../../../../../common/notification/notificat
 import { HiveUpdateDto } from '../../dto/input/hive.update.dto';
 import { HiveRepository } from '../hive.repository';
 import { HiveQueryRepository } from '../hive.query.repository';
+import { FrameQueryRepository } from '../../../frames/providers/frame.query.repository';
+import { Frame } from '../../../../domain/frame';
 
 export class HiveUpdateCommand {
   constructor(public updateDto: HiveUpdateDto, public id: string) {}
@@ -13,6 +15,7 @@ export class HiveUpdateUseCase implements ICommandHandler<HiveUpdateCommand> {
   constructor(
     private repository: HiveRepository,
     private queryRepository: HiveQueryRepository,
+    private readonly frameQueryRepository: FrameQueryRepository,
   ) {}
 
   async execute(
@@ -25,7 +28,13 @@ export class HiveUpdateUseCase implements ICommandHandler<HiveUpdateCommand> {
       notification.addError('Hive did not found');
       return notification;
     }
-    hive.update(updateDto);
+
+    let frame: null | Frame = null;
+    if (updateDto.frameTypeId)
+      frame = await this.frameQueryRepository.getDomainModel(
+        updateDto.frameTypeId,
+      );
+    hive.update(updateDto, frame);
     const result = await this.repository.save(hive);
     if (result) {
       notification.addData(result);

@@ -29,8 +29,8 @@ export class Hive extends BaseDomain {
       : 0;
     return hive;
   }
-  update(updateDto: HiveUpdateDto, frame?: Frame) {
-    if (frame) this.frameType = frame;
+  update(updateDto: HiveUpdateDto, frame: Frame) {
+    this.frameType = frame;
     this.title = updateDto.title ?? 'noname';
     this.width = isPositiveInt(updateDto.width) ? updateDto.width : 0;
     this.height = isPositiveInt(updateDto.height) ? updateDto.height : 0;

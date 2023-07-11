@@ -14,11 +14,14 @@ export class OwnerGuard<QueryRepositoryT extends BaseQueryRepository>
   constructor(private queryRepository: QueryRepositoryT) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('BreedOwnerGuard');
+    console.log('OwnerGuard');
     const request = context.switchToHttp().getRequest();
     const id = request.params.id;
     const user = request.user;
-    if (!user || !id) throw new BadRequestException();
+    if (!user || !id) {
+      console.error(`Error: user: ${!!user}, id:${!!id} `);
+      throw new BadRequestException();
+    }
     const isOwner = await this.queryRepository.isOwner(user.id, id);
     if (!isOwner) throw new ForbiddenException();
     return true;

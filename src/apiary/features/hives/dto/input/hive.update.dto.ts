@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 export class HiveUpdateDto {
   @ApiProperty()
@@ -28,5 +28,6 @@ export class HiveUpdateDto {
 
   @ApiProperty()
   @IsString()
-  frameTypeId: string;
+  @IsOptional()
+  frameTypeId: string | null;
 }
