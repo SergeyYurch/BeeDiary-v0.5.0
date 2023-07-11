@@ -33,6 +33,7 @@ import { HiveDeleteUseCase } from './features/hives/providers/use-cases/hive-del
 import { HiveUpdateUseCase } from './features/hives/providers/use-cases/hive-update-use-case';
 import { HiveRepository } from './features/hives/providers/hive.repository';
 import { HiveService } from './features/hives/providers/hive.service';
+import { HiveEntity } from './entities/hive.entity';
 
 const apiaryProviders = [
   ApiaryService,
@@ -71,7 +72,12 @@ const hiveProviders = [
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ApiaryEntity, BreedEntity, FrameEntity]),
+    TypeOrmModule.forFeature([
+      ApiaryEntity,
+      BreedEntity,
+      FrameEntity,
+      HiveEntity,
+    ]),
     CqrsModule,
     AccountModule,
   ],
