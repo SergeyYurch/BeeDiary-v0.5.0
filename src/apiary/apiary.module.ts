@@ -26,6 +26,13 @@ import { FrameDeleteUseCase } from './features/frames/providers/use-cases/frame-
 import { FrameService } from './features/frames/providers/frame.service';
 import { FrameEntity } from './entities/frame.entity';
 import { FramesController } from './api/frames.controller';
+import { HiveController } from './api/hive.controller';
+import { HiveQueryRepository } from './features/hives/providers/hive.query.repository';
+import { HiveCreateUseCase } from './features/hives/providers/use-cases/hive-create-use-case';
+import { HiveDeleteUseCase } from './features/hives/providers/use-cases/hive-delete-use-case';
+import { HiveUpdateUseCase } from './features/hives/providers/use-cases/hive-update-use-case';
+import { HiveRepository } from './features/hives/providers/hive.repository';
+import { HiveService } from './features/hives/providers/hive.service';
 
 const apiaryProviders = [
   ApiaryService,
@@ -52,13 +59,33 @@ const frameProviders = [
   FrameDeleteUseCase,
   FrameService,
 ];
+
+const hiveProviders = [
+  HiveRepository,
+  HiveQueryRepository,
+  HiveCreateUseCase,
+  HiveUpdateUseCase,
+  HiveDeleteUseCase,
+  HiveService,
+];
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([ApiaryEntity, BreedEntity, FrameEntity]),
     CqrsModule,
     AccountModule,
   ],
-  controllers: [ApiariesController, BreedsController, FramesController],
-  providers: [...apiaryProviders, ...breedProviders, ...frameProviders],
+  controllers: [
+    ApiariesController,
+    BreedsController,
+    FramesController,
+    HiveController,
+  ],
+  providers: [
+    ...apiaryProviders,
+    ...breedProviders,
+    ...frameProviders,
+    ...hiveProviders,
+  ],
 })
 export class ApiaryModule {}
