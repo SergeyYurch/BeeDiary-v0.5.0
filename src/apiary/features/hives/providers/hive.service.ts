@@ -15,7 +15,9 @@ export class HiveService {
       height: domainModel.height,
       long: domainModel.long,
       numberOfFrames: domainModel.numberOfFrames,
-      frameType: this.frameService.getViewModel(domainModel.frameType),
+      frameType: domainModel.frameType
+        ? this.frameService.getViewModel(domainModel.frameType)
+        : null,
     };
   }
 }

@@ -37,7 +37,7 @@ export class HiveEntity {
     hive.height = this.height;
     hive.long = this.long;
     hive.numberOfFrames = this.numberOfFrames;
-    hive.frameType = this.frameType.toDomain();
+    hive.frameType = this.frameType?.toDomain() ?? null;
     hive.beekeeper = this.beekeeper.toDomain();
     return hive;
   }

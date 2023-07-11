@@ -5,6 +5,7 @@ import { HiveCreateDto } from '../../dto/input/hive.create.dto';
 import { HiveRepository } from '../hive.repository';
 import { Hive } from '../../../../domain/hive';
 import { FrameQueryRepository } from '../../../frames/providers/frame.query.repository';
+import { Frame } from '../../../../domain/frame';
 
 export class HiveCreateCommand {
   constructor(public inputDto: HiveCreateDto, public user: User) {}
@@ -20,9 +21,13 @@ export class HiveCreateUseCase implements ICommandHandler<HiveCreateCommand> {
   async execute(
     command: HiveCreateCommand,
   ): Promise<NotificationResult<string>> {
-    const frame = await this.frameQueryRepository.getDomainModel(
-      command.inputDto.frameTypeId,
-    );
+    let frame: null | Frame;
+    frame = null;
+    if (command.inputDto.frameTypeId)
+      frame = await this.frameQueryRepository.getDomainModel(
+        command.inputDto.frameTypeId,
+      );
+
     const hive = Hive.create(command.inputDto, command.user, frame);
     const result = await this.hiveRepository.save(hive);
     const notification = new NotificationResult<string>();
