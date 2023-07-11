@@ -1,8 +1,9 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from '../../account/features/users/entities/user.entity';
 import { FrameEntity } from './frame.entity';
 import { Hive } from '../domain/hive';
 
+@Entity('haves')
 export class HiveEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,10 +19,10 @@ export class HiveEntity {
   long: number;
   @Column()
   numberOfFrames: number;
-  @ManyToOne(() => FrameEntity)
-  frameType: FrameEntity;
-  @Column()
-  frameTypeId: number;
+  @ManyToOne(() => FrameEntity, { nullable: true })
+  frameType: FrameEntity | null;
+  @Column({ nullable: true })
+  frameTypeId: number | null;
   @ManyToOne(() => UserEntity)
   beekeeper: UserEntity;
   @Column()
