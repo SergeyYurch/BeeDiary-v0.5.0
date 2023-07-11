@@ -11,15 +11,15 @@ export class Hive extends BaseDomain {
   height: number;
   long: number;
   numberOfFrames: number;
-  frameType: Frame;
+  frameType: Frame | null;
   beekeeper: User;
   constructor() {
     super();
   }
-  static create(inputDto: HiveCreateDto, user: User, frame: Frame) {
+  static create(inputDto: HiveCreateDto, user: User, frame?: Frame) {
     const hive = new Hive();
     hive.beekeeper = user;
-    hive.frameType = frame;
+    hive.frameType = frame ?? null;
     hive.title = inputDto.title ?? 'noname';
     hive.width = isPositiveInt(inputDto.width) ? inputDto.width : 0;
     hive.height = isPositiveInt(inputDto.height) ? inputDto.height : 0;
