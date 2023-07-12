@@ -37,6 +37,11 @@ import { HiveEntity } from './entities/hive.entity';
 import { QueenRepository } from './features/queens/providers/queen.repository';
 import { QueenEntity } from './entities/queen.entity';
 import { QueensController } from './api/queens.controller';
+import { QueenCreateUseCase } from './features/queens/providers/use-cases/queen.create.use-case';
+import { QueenQueryRepository } from './features/queens/providers/queen.query.repository';
+import { QueenDeleteUseCase } from './features/queens/providers/use-cases/queen.delete.use-case';
+import { QueenService } from './features/queens/providers/queen.service';
+import { QueenUpdateUseCase } from './features/queens/providers/use-cases/queen.update.use-case';
 
 const apiaryProviders = [
   ApiaryService,
