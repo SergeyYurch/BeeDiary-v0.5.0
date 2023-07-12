@@ -9,10 +9,10 @@ export class QueenEntity {
   id: number;
   @Column()
   createdAt: Date;
-  @ManyToOne(() => UserEntity, { nullable: true })
-  breed: BreedEntity;
+  @ManyToOne(() => BreedEntity, { nullable: true })
+  breed: BreedEntity | null;
   @Column({ nullable: true })
-  breedId: number;
+  breedId: number | null;
   @Column({ nullable: true })
   flybyMonth: number | null;
   @Column({ nullable: true })
@@ -21,9 +21,9 @@ export class QueenEntity {
   condition: number | null;
   @Column({ nullable: true })
   note: string | null;
-  @ManyToOne(() => UserEntity, { nullable: true })
+  @ManyToOne(() => UserEntity)
   beekeeper: UserEntity;
-  @Column({ nullable: true })
+  @Column()
   beekeeperId: number;
   toDomain(): Queen {
     const queen = new Queen();
