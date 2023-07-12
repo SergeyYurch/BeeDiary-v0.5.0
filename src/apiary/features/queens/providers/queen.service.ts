@@ -15,7 +15,7 @@ export class QueenService {
       flybyYear: domainModel.flybyYear,
       note: domainModel.note,
       condition: domainModel.condition,
-      grafting: domainModel.grafting,
+      grafting: null,
     };
   }
 }
