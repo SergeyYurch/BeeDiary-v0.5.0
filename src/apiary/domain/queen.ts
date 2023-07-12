@@ -23,6 +23,7 @@ export class Queen extends BaseDomain {
     // grafting: Grafting,
   ) {
     const queen = new Queen();
+    queen.createdAt = new Date();
     queen.breed = breed;
     queen.flybyMonth = inputDto.flybyMonth;
     queen.flybyYear = inputDto.flybyYear;
