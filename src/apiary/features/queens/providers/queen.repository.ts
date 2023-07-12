@@ -1,14 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { QueenQueryRepository } from './queen.query.repository';
-import { HiveEntity } from '../../../entities/hive.entity';
 import { QueenEntity } from '../../../entities/queen.entity';
 import { Queen } from '../../../domain/queen';
 
 export class QueenRepository {
   constructor(
     private readonly queryRepository: QueenQueryRepository,
-    @InjectRepository(HiveEntity)
+    @InjectRepository(QueenEntity)
     private readonly entityRepository: Repository<QueenEntity>,
   ) {}
   async save(domainModel: Queen) {
@@ -23,6 +22,7 @@ export class QueenRepository {
     entity.beekeeperId = +domainModel.beekeeper.id;
     entity.breedId = +domainModel.breed?.id || null;
     if (domainModel.breed === null) entity.breed = null;
+    console.log('queen entity to DB', entity);
     await this.entityRepository.save(entity);
     return entity.id.toString();
   }
