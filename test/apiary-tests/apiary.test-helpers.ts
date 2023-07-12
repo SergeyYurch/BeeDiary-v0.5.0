@@ -31,16 +31,6 @@ export class ApiaryTestHelpers {
     };
   }
 
-  generateCreateQueenDto(n: number): QueenCreateDto {
-    return {
-      bread: `Buckfast${n}`,
-      yearOfBirth: 2023,
-      monthOfFlyby: 5,
-      note: 'note',
-      condition: 5,
-    };
-  }
-
   generateCreateBreedDto(n): CreateBreedDto {
     return {
       title: `breed ${n}`,
@@ -63,6 +53,17 @@ export class ApiaryTestHelpers {
       long: 500,
       numberOfFrames: 10,
       frameTypeId: frameTypeId ?? null,
+    };
+  }
+
+  generateQueenCreateDto(n: number, breedId?: string): QueenCreateDto {
+    return {
+      breedId,
+      note: `queen${n}`,
+      condition: 5,
+      flybyYear: 2020,
+      flybyMonth: 5,
+      graftingId: null,
     };
   }
 
@@ -118,12 +119,13 @@ export class ApiaryTestHelpers {
   }
 
   async createQueen(accessTokens: string, n: number) {
-    const createQueenDto = this.generateCreateQueenDto(n);
+    const createQueenDto = this.generateQueenCreateDto(n);
 
-    return request(this.app.getHttpServer())
+    const { body } = await request(this.app.getHttpServer())
       .post('/queens')
       .auth(accessTokens, { type: 'bearer' })
       .send(createQueenDto)
       .expect(HttpStatus.CREATED);
+    return body;
   }
 }
