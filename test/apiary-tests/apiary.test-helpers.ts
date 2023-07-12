@@ -3,9 +3,10 @@ import { ApiaryType } from '../../src/apiary/domain/apiary';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { CreateColonyDto } from '../../src/apiary/features/colonies/dto/input/create-colony.dto';
-import { CreateQueenDto } from '../../src/apiary/features/queens/dto/input/create-queen.dto';
+import { QueenCreateDto } from '../../src/apiary/features/queens/dto/input/queen.create.dto';
 import { CreateBreedDto } from '../../src/apiary/features/breeds/dto/input/create-breed.dto';
 import { FrameCreateDto } from '../../src/apiary/features/frames/dto/input/frame-create.dto';
+import { HiveCreateDto } from '../../src/apiary/features/hives/dto/input/hive.create.dto';
 
 export class ApiaryTestHelpers {
   constructor(private app: INestApplication) {}
@@ -30,7 +31,7 @@ export class ApiaryTestHelpers {
     };
   }
 
-  generateCreateQueenDto(n: number): CreateQueenDto {
+  generateCreateQueenDto(n: number): QueenCreateDto {
     return {
       bread: `Buckfast${n}`,
       yearOfBirth: 2023,
@@ -53,6 +54,26 @@ export class ApiaryTestHelpers {
       height: 300,
       width: 435,
     };
+  }
+  generateHiveCreateDto(n: number, frameTypeId?: string): HiveCreateDto {
+    return {
+      title: `Hive type${n}`,
+      width: 500,
+      height: 450,
+      long: 500,
+      numberOfFrames: 10,
+      frameTypeId: frameTypeId ?? null,
+    };
+  }
+
+  async createHive(accessToken: string, n: number, frameTypeId?: string) {
+    const createDto = this.generateHiveCreateDto(n, frameTypeId);
+    const { body } = await request(this.app.getHttpServer())
+      .post('/hives')
+      .auth(accessToken, { type: 'bearer' })
+      .send(createDto)
+      .expect(HttpStatus.CREATED);
+    return body;
   }
 
   async createFrame(accessToken: string, n: number) {
