@@ -34,6 +34,9 @@ import { HiveUpdateUseCase } from './features/hives/providers/use-cases/hive-upd
 import { HiveRepository } from './features/hives/providers/hive.repository';
 import { HiveService } from './features/hives/providers/hive.service';
 import { HiveEntity } from './entities/hive.entity';
+import { QueenRepository } from './features/queens/providers/queen.repository';
+import { QueenEntity } from './entities/queen.entity';
+import { QueensController } from './api/queens.controller';
 
 const apiaryProviders = [
   ApiaryService,
@@ -70,6 +73,15 @@ const hiveProviders = [
   HiveService,
 ];
 
+const queenProviders = [
+  QueenRepository,
+  QueenQueryRepository,
+  QueenCreateUseCase,
+  QueenUpdateUseCase,
+  QueenDeleteUseCase,
+  QueenService,
+];
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -77,6 +89,7 @@ const hiveProviders = [
       BreedEntity,
       FrameEntity,
       HiveEntity,
+      QueenEntity,
     ]),
     CqrsModule,
     AccountModule,
@@ -86,12 +99,14 @@ const hiveProviders = [
     BreedsController,
     FramesController,
     HiveController,
+    QueensController,
   ],
   providers: [
     ...apiaryProviders,
     ...breedProviders,
     ...frameProviders,
     ...hiveProviders,
+    ...queenProviders,
   ],
 })
 export class ApiaryModule {}
