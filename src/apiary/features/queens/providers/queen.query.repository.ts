@@ -21,7 +21,7 @@ export class QueenQueryRepository extends BaseQueryRepository {
 
   async findEntityById(id: number): Promise<QueenEntity> {
     return this.entityRepository.findOne({
-      relations: { beekeeper: true, breed: true },
+      relations: { beekeeper: true, breed: { beekeeper: true } },
       where: { id },
     });
   }
@@ -32,7 +32,7 @@ export class QueenQueryRepository extends BaseQueryRepository {
   ): Promise<PaginatorViewModel<QueenViewModel>> {
     const { pageSize, pageNumber } = paginatorParams;
     const [entities, totalCount] = await this.entityRepository.findAndCount({
-      relations: { beekeeper: true, breed: true },
+      relations: { beekeeper: true, breed: { beekeeper: true } },
       where: { beekeeperId: +userId },
       skip: pageSize * (pageNumber - 1),
       take: pageSize,
@@ -49,7 +49,9 @@ export class QueenQueryRepository extends BaseQueryRepository {
   }
 
   async getDomainModel(id: string): Promise<Queen> {
+    console.log(`[QueenQueryRepository]/getDomainModel by id: ${id}`);
     const entity = await this.findEntityById(+id);
+    console.log(entity);
     if (!entity) return null;
     return entity.toDomain();
   }
