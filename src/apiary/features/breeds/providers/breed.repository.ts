@@ -14,6 +14,7 @@ export class BreedRepository {
     let breedEntity = new BreedEntity();
     if (breed.id)
       breedEntity = await this.breedQueryRepository.findEntityById(+breed.id);
+    breedEntity.createdAt = breed.createdAt;
     breedEntity.title = breed.title;
     breedEntity.beekeeperId = +breed.beekeeper.id;
     await this.breedEntityRepository.save(breedEntity);

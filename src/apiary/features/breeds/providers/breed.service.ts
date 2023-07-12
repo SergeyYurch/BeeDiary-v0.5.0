@@ -7,6 +7,7 @@ export class BreedService {
   getViewModel(breed: Breed): BreedViewModel {
     return {
       id: breed.id,
+      createdAt: breed.createdAt.toISOString(),
       title: breed.title,
     };
   }

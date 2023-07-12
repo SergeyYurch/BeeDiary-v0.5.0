@@ -42,6 +42,7 @@ describe('breeds-controller (e2e)', () => {
     breeds[0] = breed;
     expect(breed).toEqual({
       id: expect.any(String),
+      createdAt: expect.any(String),
       title: 'breed 1',
     });
   });
@@ -59,6 +60,7 @@ describe('breeds-controller (e2e)', () => {
     breeds[1] = breed;
     expect(breed).toEqual({
       id: expect.any(String),
+      createdAt: expect.any(String),
       title: 'breed 2',
     });
   });
@@ -71,6 +73,7 @@ describe('breeds-controller (e2e)', () => {
       .expect(HttpStatus.OK);
     expect(breed).toEqual({
       id: expect.any(String),
+      createdAt: expect.any(String),
       title: 'breed 1',
     });
   });
@@ -88,32 +91,25 @@ describe('breeds-controller (e2e)', () => {
   });
 
   //get all
-  // it('GET: [HOST]/breeds get all apiaries by user. Should return 200 and apiariesViewModel', async () => {
-  //   const { body: apiaries } = await request(app.getHttpServer())
-  //     .get(`/apiaries`)
-  //     .auth(accessTokens[0], { type: 'bearer' })
-  //     .expect(HttpStatus.OK);
-  //   expect(apiaries).toEqual({
-  //     pagesCount: 1,
-  //     page: 1,
-  //     pageSize: 10,
-  //     totalCount: 2,
-  //     items: expect.any(Array),
-  //   });
-  //
-  //   expect(apiaries.items[0]).toEqual({
-  //     id: expect.any(String),
-  //     beekeeper: {
-  //       id: expect.any(String),
-  //       login: 'user1',
-  //     },
-  //     type: ApiaryType.stationary,
-  //     location: 'address test',
-  //     schema: null,
-  //     disbandedAt: null,
-  //     note: 'test apiary 1',
-  //   });
-  // });
+  it('GET: [HOST]/breeds get all apiaries by user. Should return 200 and apiariesViewModel', async () => {
+    const { body: breeds } = await request(app.getHttpServer())
+      .get(`/breeds`)
+      .auth(accessTokens[0], { type: 'bearer' })
+      .expect(HttpStatus.OK);
+    expect(breeds).toEqual({
+      pagesCount: 1,
+      page: 1,
+      pageSize: 10,
+      totalCount: 2,
+      items: expect.any(Array),
+    });
+
+    expect(breeds.items[0]).toEqual({
+      id: expect.any(String),
+      createdAt: expect.any(String),
+      title: 'breed 1',
+    });
+  });
 
   //edit
   it('PUT: [HOST]/breeds/:id (POST) Edit breed1. Should return 204', async () => {
@@ -130,6 +126,7 @@ describe('breeds-controller (e2e)', () => {
 
     expect(breed).toEqual({
       id: expect.any(String),
+      createdAt: expect.any(String),
       title: 'breed edit',
     });
   });

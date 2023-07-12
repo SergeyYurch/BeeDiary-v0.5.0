@@ -10,6 +10,7 @@ export class Breed extends BaseDomain {
   }
   static create(inputDto: CreateBreedDto, user: User): Breed {
     const domainModel = new Breed();
+    domainModel.createdAt = new Date();
     domainModel.title = inputDto.title;
     domainModel.beekeeper = user;
     return domainModel;

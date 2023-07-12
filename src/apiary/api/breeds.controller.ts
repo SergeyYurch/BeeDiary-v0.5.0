@@ -59,13 +59,12 @@ export class BreedsController
     return this.breedService.getViewModel(breed);
   }
 
-  @UseGuards(BreedOwnerGuard)
   @Get()
   async findAll(
     @CurrentUserModel() user: User,
     @PaginatorParam() paginatorParams: PaginatorInputType,
   ): Promise<PaginatorViewModel<BreedViewModel>> {
-    return;
+    return this.breedQueryRepository.getAllBreeds(paginatorParams, user.id);
   }
 
   @UseGuards(BreedOwnerGuard)
