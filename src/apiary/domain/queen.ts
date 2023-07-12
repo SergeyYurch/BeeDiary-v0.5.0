@@ -14,12 +14,13 @@ export class Queen extends BaseDomain {
   flybyYear: number | null;
   note: string | null;
   condition: number | null;
-  grafting: Grafting | null;
+  // grafting: Grafting | null;
+  beekeeper: User;
   static create(
     inputDto: QueenCreateDto,
     user: User,
     breed: Breed,
-    grafting: Grafting,
+    // grafting: Grafting,
   ) {
     const queen = new Queen();
     queen.breed = breed;
@@ -27,15 +28,16 @@ export class Queen extends BaseDomain {
     queen.flybyYear = inputDto.flybyYear;
     queen.note = inputDto.note;
     queen.condition = inputDto.condition;
-    queen.grafting = grafting;
+    // queen.grafting = grafting;
+    queen.beekeeper = user;
     return queen;
   }
-  update(updateDto: QueenUpdateDto, breed: Breed, grafting: Grafting | null) {
+  update(updateDto: QueenUpdateDto, breed: Breed, grafting?: Grafting | null) {
     this.breed = breed;
     this.flybyMonth = updateDto.flybyMonth;
     this.flybyYear = updateDto.flybyYear;
     this.note = updateDto.note;
     this.condition = updateDto.condition;
-    this.grafting = grafting;
+    // this.grafting = grafting;
   }
 }
