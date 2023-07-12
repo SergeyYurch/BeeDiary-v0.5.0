@@ -55,7 +55,7 @@ export class BreedsController
     );
     if (notificationRes.hasError()) throw new BadRequestException();
     const breadId = notificationRes.data;
-    const breed = await this.breedQueryRepository.getBreed(breadId);
+    const breed = await this.breedQueryRepository.getDomainModel(breadId);
     return this.breedService.getViewModel(breed);
   }
 
@@ -72,7 +72,7 @@ export class BreedsController
   @UseGuards(BreedIdGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<BreedViewModel> {
-    const breed = await this.breedQueryRepository.getBreed(id);
+    const breed = await this.breedQueryRepository.getDomainModel(id);
     if (!breed) throw new BadRequestException();
     return this.breedService.getViewModel(breed);
   }

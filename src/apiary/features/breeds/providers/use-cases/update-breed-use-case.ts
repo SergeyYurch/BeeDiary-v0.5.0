@@ -19,7 +19,7 @@ export class UpdateBreedUseCase implements ICommandHandler<UpdateBreedCommand> {
     command: UpdateBreedCommand,
   ): Promise<NotificationResult<string>> {
     const { updateBreedDto, id } = command;
-    const breed = await this.queryRepository.getBreed(id);
+    const breed = await this.queryRepository.getDomainModel(id);
     breed.title = updateBreedDto.title;
     const result = await this.breedRepository.save(breed);
     const notification = new NotificationResult<string>();

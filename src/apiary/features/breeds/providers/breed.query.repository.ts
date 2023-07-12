@@ -30,7 +30,7 @@ export class BreedQueryRepository {
       breeds: entities.map((e) => e.toDomain()),
     };
   }
-  async getBreed(id: string) {
+  async getDomainModel(id: string) {
     const entity: BreedEntity = await this.findEntityById(+id);
     if (!entity) return null;
     console.log('Breed entity', entity);
