@@ -118,12 +118,11 @@ export class ApiaryTestHelpers {
       .expect(HttpStatus.CREATED);
   }
 
-  async createQueen(accessTokens: string, n: number) {
-    const createQueenDto = this.generateQueenCreateDto(n);
-
+  async createQueen(accessToken: string, n: number, testBreedId?: string) {
+    const createQueenDto = this.generateQueenCreateDto(n, testBreedId);
     const { body } = await request(this.app.getHttpServer())
       .post('/queens')
-      .auth(accessTokens, { type: 'bearer' })
+      .auth(accessToken, { type: 'bearer' })
       .send(createQueenDto)
       .expect(HttpStatus.CREATED);
     return body;
