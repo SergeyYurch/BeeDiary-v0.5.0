@@ -5,6 +5,7 @@ import { Queen } from './queen';
 import { DangerStatusEnum } from '../types/danger-status.enum';
 import { ColonyCreateDto } from '../features/colonies/dto/input/colony.create.dto';
 import { ColonyUpdateDto } from '../features/colonies/dto/input/colony.update.dto';
+import { User } from '../../account/features/users/domain/user';
 
 export class Colony extends BaseDomain {
   number: number;
@@ -14,6 +15,7 @@ export class Colony extends BaseDomain {
   condition: number;
   note: string;
   status: DangerStatusEnum;
+  beekeeper: User;
   constructor() {
     super();
   }
@@ -22,6 +24,7 @@ export class Colony extends BaseDomain {
     hive: Hive,
     frame: Frame,
     queen: Queen,
+    user: User,
   ) {
     const colony = new Colony();
     colony.number = createDto.number;
@@ -31,6 +34,7 @@ export class Colony extends BaseDomain {
     colony.condition = createDto.condition;
     colony.note = createDto.note;
     colony.status = createDto.status;
+    colony.beekeeper = user;
   }
   update(
     updateDto: ColonyUpdateDto,
