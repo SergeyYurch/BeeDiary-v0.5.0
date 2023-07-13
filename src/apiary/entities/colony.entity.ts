@@ -15,15 +15,15 @@ export class ColonyEntity {
   @ManyToOne(() => HiveEntity)
   hive: HiveEntity;
   @Column()
-  hiveId: HiveEntity;
+  hiveId: number;
   @ManyToOne(() => FrameEntity)
   nestFrameType: FrameEntity;
   @Column()
-  nestFrameTypeId: FrameEntity;
+  nestFrameTypeId: number;
   @ManyToOne(() => QueenEntity)
   queen: QueenEntity;
   @Column()
-  queenId: QueenEntity;
+  queenId: number;
   @Column()
   condition: number;
   @Column()
