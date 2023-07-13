@@ -4,7 +4,7 @@ import { Frame } from './frame';
 import { Queen } from './queen';
 import { DangerStatusEnum } from '../types/danger-status.enum';
 import { ColonyCreateDto } from '../features/colonies/dto/input/colony.create.dto';
-import { UpdateColonyDto } from '../../../dist/apiary/features/colonies/dto/input/update-colony.dto';
+import { ColonyUpdateDto } from '../features/colonies/dto/input/colony.update.dto';
 
 export class Colony extends BaseDomain {
   number: number;
@@ -33,7 +33,7 @@ export class Colony extends BaseDomain {
     colony.status = createDto.status;
   }
   update(
-    updateDto: UpdateColonyDto,
+    updateDto: ColonyUpdateDto,
     hive: Hive | null = null,
     frame: Frame | null = null,
     queen: Queen | null = null,
