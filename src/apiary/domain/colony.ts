@@ -35,6 +35,7 @@ export class Colony extends BaseDomain {
     colony.note = createDto.note;
     colony.status = createDto.status;
     colony.beekeeper = user;
+    return colony;
   }
   update(
     updateDto: ColonyUpdateDto,
