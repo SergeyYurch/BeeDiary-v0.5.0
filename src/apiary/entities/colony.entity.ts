@@ -48,5 +48,6 @@ export class ColonyEntity {
     colony.note = this.note;
     colony.status = this.status;
     colony.beekeeper = this.beekeeper?.toDomain() ?? null;
+    return colony;
   }
 }
