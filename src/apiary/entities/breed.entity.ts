@@ -20,7 +20,7 @@ export class BreedEntity {
     breed.id = this.id.toString();
     breed.title = this.title;
     breed.createdAt = this.createdAt;
-    breed.beekeeper = this.beekeeper.toDomain();
+    breed.beekeeper = this.beekeeper?.toDomain() ?? null;
     return breed;
   }
 }

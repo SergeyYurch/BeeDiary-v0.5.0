@@ -38,7 +38,8 @@ export class HiveEntity {
     hive.long = this.long;
     hive.numberOfFrames = this.numberOfFrames;
     hive.frameType = this.frameType?.toDomain() ?? null;
-    hive.beekeeper = this.beekeeper.toDomain();
+    hive.beekeeper = this.beekeeper?.toDomain() ?? null;
+
     return hive;
   }
 }

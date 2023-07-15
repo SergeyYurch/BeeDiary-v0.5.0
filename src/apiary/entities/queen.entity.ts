@@ -27,14 +27,14 @@ export class QueenEntity {
   beekeeperId: number;
   toDomain(): Queen {
     const queen = new Queen();
-    queen.id = this.id.toString();
+    queen.id = this.id?.toString();
     queen.createdAt = this.createdAt;
-    queen.breed = this.breed.toDomain();
+    queen.breed = this.breed?.toDomain() ?? null;
     queen.flybyMonth = this.flybyMonth;
     queen.flybyYear = this.flybyYear;
     queen.condition = this.condition;
     queen.note = this.note;
-    queen.beekeeper = this.beekeeper.toDomain();
+    queen.beekeeper = this.beekeeper?.toDomain() ?? null;
     return queen;
   }
   // @ManyToOne(() => GraftingEntity, { nullable: true })

@@ -29,7 +29,7 @@ export class FrameEntity {
     frame.width = this.width;
     frame.height = this.height;
     frame.numberOfCells = this.cellsNumber;
-    frame.beekeeper = this.beekeeper?.toDomain();
+    frame.beekeeper = this.beekeeper?.toDomain() ?? null;
     return frame;
   }
 }
