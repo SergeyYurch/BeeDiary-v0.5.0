@@ -4,12 +4,12 @@ import { disconnect } from 'mongoose';
 import { getApp } from '../test-utils';
 import { PrepareTestHelpers } from '../helpers/prepaire.test.helpers';
 import { ApiaryTestHelpers } from './apiary.test-helpers';
-import { ApiaryType } from '../../src/apiary/domain/apiary';
 import { QueenViewModel } from '../../src/apiary/features/queens/dto/view/queen.view.model';
 import { ColonyViewModel } from '../../src/apiary/features/colonies/dto/view/colony.view.model';
 import { BreedViewModel } from '../../src/apiary/features/breeds/dto/view/breed.view.model';
 import { HiveViewModel } from '../../src/apiary/features/hives/dto/view/hive.view.model';
 import { FrameViewModel } from '../../src/apiary/features/frames/dto/view/frame.view.model';
+import { ColonyCreateDto } from '../../src/apiary/features/colonies/dto/input/colony.create.dto';
 
 describe('Colonies-controller (e2e)', () => {
   let app: INestApplication;
@@ -20,7 +20,7 @@ describe('Colonies-controller (e2e)', () => {
   const breeds: BreedViewModel[] = [];
   const hives: HiveViewModel[] = [];
   const frames: FrameViewModel[] = [];
-
+  const createDtos: ColonyCreateDto[] = [];
   let accessTokens: string[]; // to store accessTokens
 
   beforeAll(async () => {
@@ -59,6 +59,7 @@ describe('Colonies-controller (e2e)', () => {
       frames[0].id,
       queens[0].id,
     );
+    createDtos[0] = createColonyDto;
     const { body: colony } = await request(app.getHttpServer())
       .post('/colonies')
       .auth(accessTokens[0], { type: 'bearer' })
@@ -120,6 +121,7 @@ describe('Colonies-controller (e2e)', () => {
       frames[0].id,
       queens[0].id,
     );
+    createDtos[1] = createColonyDto;
     const colony = await apiaryTestHelpers.createColony(
       accessTokens[0],
       2,
@@ -181,6 +183,7 @@ describe('Colonies-controller (e2e)', () => {
       frames[0].id,
       queens[0].id,
     );
+    createDtos[2] = createColonyDto;
     colonies[2] = await apiaryTestHelpers.createColony(
       accessTokens[0],
       3,
@@ -189,33 +192,67 @@ describe('Colonies-controller (e2e)', () => {
   });
 
   //get colony by id
-  it('GET: [HOST]/colonies/:id get colony by id. Should return 200 and the apiaryViewModel', async () => {
-    const { body: apiary } = await request(app.getHttpServer())
+  it('GET: [HOST]/colonies/:id get colony by id. Should return 200 and the ViewModel', async () => {
+    const { body: colony } = await request(app.getHttpServer())
       .get(`/colonies/${colonies[0].id}`)
       .auth(accessTokens[0], { type: 'bearer' })
       .expect(HttpStatus.OK);
-    expect(apiary).toEqual({
+    expect(colony).toEqual({
       id: expect.any(String),
-      beekeeper: {
-        id: expect.any(String),
-        login: 'user1',
+      createdAt: expect.any(String),
+      number: 1,
+      hiveType: {
+        id: hives[0].id,
+        createdAt: expect.any(String),
+        title: 'Hive type1',
+        width: 500,
+        height: 450,
+        long: 500,
+        numberOfFrames: 10,
+        frameType: {
+          id: frames[0].id,
+          createdAt: expect.any(String),
+          type: `Dadan1`,
+          numberOfCells: 9000,
+          height: 300,
+          width: 435,
+        },
       },
-      type: ApiaryType.stationary,
-      location: 'address test',
-      schema: null,
-      disbandedAt: null,
-      note: 'test apiary 1',
+      nestFrameType: {
+        id: frames[0].id,
+        createdAt: expect.any(String),
+        type: `Dadan1`,
+        numberOfCells: 9000,
+        height: 300,
+        width: 435,
+      },
+      queen: {
+        id: queens[0].id,
+        createdAt: expect.any(String),
+        breed: {
+          id: breeds[0].id,
+          createdAt: expect.any(String),
+          title: 'breed 1',
+        },
+        note: `queen1`,
+        condition: 5,
+        flybyYear: 2020,
+        flybyMonth: 5,
+        grafting: null,
+      },
+      note: 'note',
+      condition: 5,
+      status: 2,
     });
-    console.log('Returned apiary:');
-    console.log(apiary);
   });
-  it('GET: [HOST]/colonies/:id get colony by id. Should return 404 if the apiaryId is missing ', async () => {
+
+  it('GET: [HOST]/colonies/:id get colony by id. Should return 404 if the id is missing ', async () => {
     await request(app.getHttpServer())
       .get(`/colonies/1`)
       .auth(accessTokens[0], { type: 'bearer' })
       .expect(HttpStatus.NOT_FOUND);
   });
-  it('GET: [HOST]/colonies/:id get colony by id. Should return 403 if try get the apiary that is not your own', async () => {
+  it('GET: [HOST]/colonies/:id get colony by id. Should return 403 if try get the product that is not your own', async () => {
     await request(app.getHttpServer())
       .get(`/colonies/${colonies[0].id}`)
       .auth(accessTokens[1], { type: 'bearer' })
@@ -223,7 +260,7 @@ describe('Colonies-controller (e2e)', () => {
   });
 
   //get all colonies
-  it('GET: [HOST]/colonies get all colonies by user. Should return 200 and apiariesViewModel', async () => {
+  it('GET: [HOST]/colonies get all colonies by user. Should return 200 and viewModel', async () => {
     const { body: apiaries } = await request(app.getHttpServer())
       .get(`/colonies`)
       .auth(accessTokens[0], { type: 'bearer' })
@@ -232,82 +269,152 @@ describe('Colonies-controller (e2e)', () => {
       pagesCount: 1,
       page: 1,
       pageSize: 10,
-      totalCount: 2,
+      totalCount: 3,
       items: expect.any(Array),
     });
 
     expect(apiaries.items[0]).toEqual({
       id: expect.any(String),
-      beekeeper: {
-        id: expect.any(String),
-        login: 'user1',
+      createdAt: expect.any(String),
+      number: 1,
+      hiveType: {
+        id: hives[0].id,
+        createdAt: expect.any(String),
+        title: 'Hive type1',
+        width: 500,
+        height: 450,
+        long: 500,
+        numberOfFrames: 10,
+        frameType: {
+          id: frames[0].id,
+          createdAt: expect.any(String),
+          type: `Dadan1`,
+          numberOfCells: 9000,
+          height: 300,
+          width: 435,
+        },
       },
-      type: ApiaryType.stationary,
-      location: 'address test',
-      schema: null,
-      disbandedAt: null,
-      note: 'test apiary 1',
+      nestFrameType: {
+        id: frames[0].id,
+        createdAt: expect.any(String),
+        type: `Dadan1`,
+        numberOfCells: 9000,
+        height: 300,
+        width: 435,
+      },
+      queen: {
+        id: queens[0].id,
+        createdAt: expect.any(String),
+        breed: {
+          id: breeds[0].id,
+          createdAt: expect.any(String),
+          title: 'breed 1',
+        },
+        note: `queen1`,
+        condition: 5,
+        flybyYear: 2020,
+        flybyMonth: 5,
+        grafting: null,
+      },
+      note: 'note',
+      condition: 5,
+      status: 2,
     });
   });
 
   //edit colony
   it('PUT: [HOST]/colonies/:id (POST) Edit colony. Should return 204', async () => {
-    const editedApiaryDto = apiaryTestHelpers.generateCreateApiaryDto(1);
-    editedApiaryDto.location = 'edit location';
+    const editedDto = createDtos[0];
+    editedDto.status = 0;
     await request(app.getHttpServer())
       .put(`/colonies/${colonies[0].id}`)
       .auth(accessTokens[0], { type: 'bearer' })
-      .send(editedApiaryDto)
+      .send(editedDto)
       .expect(HttpStatus.NO_CONTENT);
 
-    const { body: apiary } = await request(app.getHttpServer())
+    const { body: colony } = await request(app.getHttpServer())
       .get(`/colonies/${colonies[0].id}`)
       .auth(accessTokens[0], { type: 'bearer' })
       .expect(HttpStatus.OK);
 
-    expect(apiary).toEqual({
+    expect(colony).toEqual({
       id: expect.any(String),
-      beekeeper: {
-        id: expect.any(String),
-        login: 'user1',
+      createdAt: expect.any(String),
+      number: 1,
+      hiveType: {
+        id: hives[0].id,
+        createdAt: expect.any(String),
+        title: 'Hive type1',
+        width: 500,
+        height: 450,
+        long: 500,
+        numberOfFrames: 10,
+        frameType: {
+          id: frames[0].id,
+          createdAt: expect.any(String),
+          type: `Dadan1`,
+          numberOfCells: 9000,
+          height: 300,
+          width: 435,
+        },
       },
-      type: ApiaryType.stationary,
-      location: 'edit location',
-      schema: null,
-      disbandedAt: null,
-      note: 'test apiary 1',
+      nestFrameType: {
+        id: frames[0].id,
+        createdAt: expect.any(String),
+        type: `Dadan1`,
+        numberOfCells: 9000,
+        height: 300,
+        width: 435,
+      },
+      queen: {
+        id: queens[0].id,
+        createdAt: expect.any(String),
+        breed: {
+          id: breeds[0].id,
+          createdAt: expect.any(String),
+          title: 'breed 1',
+        },
+        note: `queen1`,
+        condition: 5,
+        flybyYear: 2020,
+        flybyMonth: 5,
+        grafting: null,
+      },
+      note: 'note',
+      condition: 5,
+      status: 0,
     });
   });
-  it('PUT: [HOST]/colonies/:id (POST) Edit colony. Should return 404 if the apiaryId is missing', async () => {
-    const editedApiaryDto = apiaryTestHelpers.generateCreateApiaryDto(1);
-    editedApiaryDto.location = 'edit location';
+  it('PUT: [HOST]/colonies/:id (POST) Edit colony. Should return 404 if the id is missing', async () => {
+    const editedDto = createDtos[0];
+    editedDto.status = 0;
     await request(app.getHttpServer())
       .put(`/colonies/1`)
       .auth(accessTokens[0], { type: 'bearer' })
-      .send(editedApiaryDto)
+      .send(editedDto)
       .expect(HttpStatus.NOT_FOUND);
   });
-  it('PUT: [HOST]/colonies/:id (POST) Edit colony. Should return 403 if  try edit the apiary that is not your', async () => {
-    const editedApiaryDto = apiaryTestHelpers.generateCreateApiaryDto(1);
-    editedApiaryDto.location = 'edit location';
+  it('PUT: [HOST]/colonies/:id (POST) Edit colony. Should return 403 if  try edit the colony that is not your', async () => {
+    const editedDto = apiaryTestHelpers.generateCreateApiaryDto(1);
+    editedDto.location = 'edit location';
     await request(app.getHttpServer())
       .put(`/colonies/${colonies[0].id}`)
       .auth(accessTokens[1], { type: 'bearer' })
-      .send(editedApiaryDto)
+      .send(editedDto)
       .expect(HttpStatus.FORBIDDEN);
   });
 
   //delete colony
-  it('PUT: [HOST]/colonies/:id (POST) delete colony. Should return 404 if the apiaryId is missing', async () => {
-    const editedApiaryDto = apiaryTestHelpers.generateCreateApiaryDto(1);
-    editedApiaryDto.location = 'edit location';
+  it('DELETE: [HOST]/colonies/:id (POST) delete colony. Should return 404 if the id is missing', async () => {
+    const editedApiaryDto = createDtos[0];
+    editedApiaryDto.status = 0;
     await request(app.getHttpServer())
       .delete(`/colonies/1`)
       .auth(accessTokens[0], { type: 'bearer' })
       .send(editedApiaryDto)
       .expect(HttpStatus.NOT_FOUND);
   });
-  it('PUT: [HOST]/colonies/:id (POST) delete colony. Should return 403 if  try delete the apiary that is not your', async () => {
+  it('DELETE: [HOST]/colonies/:id (POST) delete colony. Should return 403 if  try delete the apiary that is not your', async () => {
     const editedApiaryDto = apiaryTestHelpers.generateCreateApiaryDto(1);
     editedApiaryDto.location = 'edit location';
     await request(app.getHttpServer())
