@@ -36,13 +36,13 @@ export class ColonyCreateUseCase
       hiveDomainModel = await this.hiveQueryRepository.getDomainModel(
         command.inputDto.hiveTypeId,
       );
-    if (command.inputDto.hiveTypeId)
+    if (command.inputDto.nestsFrameTypeId)
       frameDomainModel = await this.frameQueryRepository.getDomainModel(
-        command.inputDto.hiveTypeId,
+        command.inputDto.nestsFrameTypeId,
       );
     if (command.inputDto.queenId)
       queenDomainModel = await this.queenQueryRepository.getDomainModel(
-        command.inputDto.hiveTypeId,
+        command.inputDto.queenId,
       );
     const colony = Colony.create(
       command.inputDto,
@@ -51,6 +51,7 @@ export class ColonyCreateUseCase
       queenDomainModel,
       command.user,
     );
+    console.log('colony', colony);
     const result = await this.repository.save(colony);
     const notification = new NotificationResult<string>();
     if (result) {
