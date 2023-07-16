@@ -42,6 +42,14 @@ import { QueenQueryRepository } from './features/queens/providers/queen.query.re
 import { QueenDeleteUseCase } from './features/queens/providers/use-cases/queen.delete.use-case';
 import { QueenService } from './features/queens/providers/queen.service';
 import { QueenUpdateUseCase } from './features/queens/providers/use-cases/queen.update.use-case';
+import { ColonyRepository } from './features/colonies/providers/colony.repository';
+import { ColonyUpdateUseCase } from './features/colonies/providers/use-cases/colony.update.use-case';
+import { ColonyQueryRepository } from './features/colonies/providers/colony.query.repository';
+import { ColonyCreateUseCase } from './features/colonies/providers/use-cases/colony.create.use-case';
+import { ColonyService } from './features/colonies/providers/colony.service';
+import { ColonyDeleteUseCase } from './features/colonies/providers/use-cases/colony.delete.use-case';
+import { ColonyEntity } from './entities/colony.entity';
+import { ColonyController } from './api/colony.controller';
 
 const apiaryProviders = [
   ApiaryService,
@@ -87,6 +95,15 @@ const queenProviders = [
   QueenService,
 ];
 
+const colonyProviders = [
+  ColonyRepository,
+  ColonyQueryRepository,
+  ColonyCreateUseCase,
+  ColonyUpdateUseCase,
+  ColonyDeleteUseCase,
+  ColonyService,
+];
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -95,6 +112,7 @@ const queenProviders = [
       FrameEntity,
       HiveEntity,
       QueenEntity,
+      ColonyEntity,
     ]),
     CqrsModule,
     AccountModule,
@@ -105,6 +123,7 @@ const queenProviders = [
     FramesController,
     HiveController,
     QueensController,
+    ColonyController,
   ],
   providers: [
     ...apiaryProviders,
@@ -112,6 +131,7 @@ const queenProviders = [
     ...frameProviders,
     ...hiveProviders,
     ...queenProviders,
+    ...colonyProviders,
   ],
 })
 export class ApiaryModule {}
