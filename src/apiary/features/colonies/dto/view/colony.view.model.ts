@@ -6,7 +6,7 @@ export class ColonyViewModel {
   id: string;
   createdAt: string;
   number: number;
-  hive: HiveViewModel;
+  hiveType: HiveViewModel;
   nestFrameType: FrameViewModel; // тип гнездовой рамки
   queen: QueenViewModel;
   condition: number;
