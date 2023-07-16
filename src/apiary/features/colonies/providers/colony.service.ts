@@ -17,7 +17,7 @@ export class ColonyService {
       id: domainModel.id,
       createdAt: domainModel.createdAt.toISOString(),
       number: domainModel.number,
-      hive: this.hiveService.getViewModel(domainModel.hive),
+      hiveType: this.hiveService.getViewModel(domainModel.hive),
       nestFrameType: this.frameService.getViewModel(domainModel.nestFrameType),
       queen: this.queenService.getViewModel(domainModel.queen),
       condition: domainModel.condition,
