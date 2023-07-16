@@ -2,11 +2,16 @@ import { CreateApiaryDto } from '../../src/apiary/features/apiaries/dto/input/cr
 import { ApiaryType } from '../../src/apiary/domain/apiary';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { CreateColonyDto } from '../../src/apiary/features/colonies/dto/input/create-colony.dto';
 import { QueenCreateDto } from '../../src/apiary/features/queens/dto/input/queen.create.dto';
 import { CreateBreedDto } from '../../src/apiary/features/breeds/dto/input/create-breed.dto';
 import { FrameCreateDto } from '../../src/apiary/features/frames/dto/input/frame-create.dto';
 import { HiveCreateDto } from '../../src/apiary/features/hives/dto/input/hive.create.dto';
+import { QueenViewModel } from '../../src/apiary/features/queens/dto/view/queen.view.model';
+import { ColonyViewModel } from '../../src/apiary/features/colonies/dto/view/colony.view.model';
+import { BreedViewModel } from '../../src/apiary/features/breeds/dto/view/breed.view.model';
+import { FrameViewModel } from '../../src/apiary/features/frames/dto/view/frame.view.model';
+import { HiveViewModel } from '../../src/apiary/features/hives/dto/view/hive.view.model';
+import { ColonyCreateDto } from '../../src/apiary/features/colonies/dto/input/colony.create.dto';
 
 export class ApiaryTestHelpers {
   constructor(private app: INestApplication) {}
@@ -20,14 +25,20 @@ export class ApiaryTestHelpers {
     };
   }
 
-  generateCreateColonyDto(n, queenId): CreateColonyDto {
+  generateCreateColonyDto(
+    n: number,
+    hiveTypeId: string,
+    nestsFrameTypeId: string,
+    queenId: string,
+  ): ColonyCreateDto {
     return {
       number: n,
+      hiveTypeId,
+      nestsFrameTypeId,
       queenId,
-      note: 'note',
       condition: 5,
-      hiveTypeId: 1,
-      nestsFrameTypeId: 1,
+      note: 'note',
+      status: 2,
     };
   }
 
@@ -45,6 +56,7 @@ export class ApiaryTestHelpers {
       width: 435,
     };
   }
+
   generateHiveCreateDto(n: number, frameTypeId?: string): HiveCreateDto {
     return {
       title: `Hive type${n}`,
@@ -67,7 +79,11 @@ export class ApiaryTestHelpers {
     };
   }
 
-  async createHive(accessToken: string, n: number, frameTypeId?: string) {
+  async createHive(
+    accessToken: string,
+    n: number,
+    frameTypeId?: string,
+  ): Promise<HiveViewModel> {
     const createDto = this.generateHiveCreateDto(n, frameTypeId);
     const { body } = await request(this.app.getHttpServer())
       .post('/hives')
@@ -77,7 +93,7 @@ export class ApiaryTestHelpers {
     return body;
   }
 
-  async createFrame(accessToken: string, n: number) {
+  async createFrame(accessToken: string, n: number): Promise<FrameViewModel> {
     const createDto = this.generateFrameCreateDto(n);
     const { body } = await request(this.app.getHttpServer())
       .post('/frames')
@@ -87,7 +103,7 @@ export class ApiaryTestHelpers {
     return body;
   }
 
-  async createBreed(accessToken: string, n: number) {
+  async createBreed(accessToken: string, n: number): Promise<BreedViewModel> {
     const createBreedDto = this.generateCreateBreedDto(n);
     console.log('accessTokens', accessToken);
     const { body: breed } = await request(this.app.getHttpServer())
@@ -98,7 +114,10 @@ export class ApiaryTestHelpers {
     return breed;
   }
 
-  async createApiary(accessTokens: string, n: number) {
+  async createApiary(
+    accessTokens: string,
+    n: number,
+  ) /*:Promise<ApiaryViewModel>*/ {
     const createdApiaryDto = this.generateCreateApiaryDto(n);
 
     return request(this.app.getHttpServer())
@@ -108,17 +127,24 @@ export class ApiaryTestHelpers {
       .expect(HttpStatus.CREATED);
   }
 
-  async createColony(accessTokens: string, n: number, queenId: number) {
-    const createdColonyDto = this.generateCreateColonyDto(n, queenId);
-
-    return request(this.app.getHttpServer())
+  async createColony(
+    accessTokens: string,
+    n: number,
+    createdColonyDto: ColonyCreateDto,
+  ): Promise<ColonyViewModel> {
+    const { body } = await request(this.app.getHttpServer())
       .post('/colonies')
       .auth(accessTokens, { type: 'bearer' })
       .send(createdColonyDto)
       .expect(HttpStatus.CREATED);
+    return body;
   }
 
-  async createQueen(accessToken: string, n: number, testBreedId?: string) {
+  async createQueen(
+    accessToken: string,
+    n: number,
+    testBreedId?: string,
+  ): Promise<QueenViewModel> {
     const createQueenDto = this.generateQueenCreateDto(n, testBreedId);
     const { body } = await request(this.app.getHttpServer())
       .post('/queens')
