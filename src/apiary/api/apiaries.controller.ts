@@ -11,20 +11,20 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { CreateApiaryDto } from '../features/apiaries/dto/input/create-apiary.dto';
-import { UpdateApiaryDto } from '../features/apiaries/dto/input/update-apiary.dto';
+import { ApiaryCreateDto } from '../features/apiaries/dto/input/apiary.create.dto';
+import { ApiaryUpdateDto } from '../features/apiaries/dto/input/apiary.update.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateApiaryCommand } from '../features/apiaries/providers/use-cases/create-apiary-use-case';
+import { CreateApiaryCommand } from '../features/apiaries/providers/use-cases/apiary.create.use-case';
 import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
 import { User } from '../../account/features/users/domain/user';
 import { ApiaryQueryRepository } from '../features/apiaries/providers/apiary.query.repository';
 import { CurrentUserModel } from '../../account/decorators/current-user-model.param.decorator';
 import { PaginatorParam } from '../../common/decorators/paginator-param.decorator';
 import { PaginatorInputType } from '../../common/dto/input-models/paginator.input.type';
-import { UpdateApiaryCommand } from '../features/apiaries/providers/use-cases/update-apiary-use-case';
+import { UpdateApiaryCommand } from '../features/apiaries/providers/use-cases/apiary.update.use-case';
 import { CheckApiaryIdGuard } from '../guards/check-apiary-id.guard';
-import { DeleteApiaryCommand } from '../features/apiaries/providers/use-cases/delete-apiary-use-case';
+import { DeleteApiaryCommand } from '../features/apiaries/providers/use-cases/apiary.delete.use-case';
 import { NotificationResult } from '../../common/notification/notificationResult';
 import { ApiaryViewModel } from '../features/apiaries/dto/view/apiary.view.model';
 import { ApiaryOwnerGuard } from '../guards/apiary-owner.guard';
@@ -36,7 +36,7 @@ import { PaginatorViewModel } from '../../common/dto/view-models/paginator.view.
 @Controller('apiaries')
 export class ApiariesController
   implements
-    BaseControllerInterface<CreateApiaryDto, UpdateApiaryDto, ApiaryViewModel>
+    BaseControllerInterface<ApiaryCreateDto, ApiaryUpdateDto, ApiaryViewModel>
 {
   constructor(
     private readonly queryRepository: ApiaryQueryRepository,
@@ -45,7 +45,7 @@ export class ApiariesController
 
   @Post()
   async create(
-    @Body() createApiaryDto: CreateApiaryDto,
+    @Body() createApiaryDto: ApiaryCreateDto,
     @CurrentUserModel() user: User,
   ): Promise<ApiaryViewModel> {
     const resultOfCreate = await this.commandBus.execute<
@@ -83,7 +83,7 @@ export class ApiariesController
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateApiaryDto: UpdateApiaryDto,
+    @Body() updateApiaryDto: ApiaryUpdateDto,
   ): Promise<void> {
     const result = await this.commandBus.execute<
       UpdateApiaryCommand,

@@ -1,16 +1,16 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateApiaryDto } from '../../dto/input/create-apiary.dto';
+import { ApiaryCreateDto } from '../../dto/input/apiary.create.dto';
 import { ApiaryRepository } from '../apiary.repository';
 import { Apiary } from '../../../../domain/apiary';
 import { User } from '../../../../../account/features/users/domain/user';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
 
 export class CreateApiaryCommand {
-  constructor(public inputDto: CreateApiaryDto, public user: User) {}
+  constructor(public inputDto: ApiaryCreateDto, public user: User) {}
 }
 
 @CommandHandler(CreateApiaryCommand)
-export class CreateApiaryUseCase
+export class ApiaryCreateUseCase
   implements ICommandHandler<CreateApiaryCommand>
 {
   constructor(private apiaryRepository: ApiaryRepository) {}

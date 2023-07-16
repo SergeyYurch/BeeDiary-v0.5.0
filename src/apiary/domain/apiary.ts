@@ -1,6 +1,6 @@
 import { BaseDomain } from '../../common/decorators/base-domain.class';
 import { User } from '../../account/features/users/domain/user';
-import { CreateApiaryDto } from '../features/apiaries/dto/input/create-apiary.dto';
+import { ApiaryCreateDto } from '../features/apiaries/dto/input/apiary.create.dto';
 
 export class Apiary extends BaseDomain {
   beekeeper: User;
@@ -17,7 +17,7 @@ export class Apiary extends BaseDomain {
     this.type = ApiaryType.stationary;
   }
 
-  static create(inputDto: CreateApiaryDto, user: User): Apiary {
+  static create(inputDto: ApiaryCreateDto, user: User): Apiary {
     const apiary = new Apiary();
     apiary.createdAt = new Date(inputDto.createdAt);
     apiary.beekeeper = user;

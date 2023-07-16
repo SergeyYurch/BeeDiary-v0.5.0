@@ -1,6 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ApiaryRepository } from '../apiary.repository';
-import { ApiaryQueryRepository } from '../apiary.query.repository';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
 
 export class DeleteApiaryCommand {
@@ -8,13 +7,10 @@ export class DeleteApiaryCommand {
 }
 
 @CommandHandler(DeleteApiaryCommand)
-export class DeleteApiaryUseCase
+export class ApiaryDeleteUseCase
   implements ICommandHandler<DeleteApiaryCommand>
 {
-  constructor(
-    private apiaryRepository: ApiaryRepository,
-    private readonly apiaryQueryRepository: ApiaryQueryRepository,
-  ) {}
+  constructor(private apiaryRepository: ApiaryRepository) {}
 
   async execute(command: DeleteApiaryCommand) {
     const result = await this.apiaryRepository.delete(command.apiaryId);

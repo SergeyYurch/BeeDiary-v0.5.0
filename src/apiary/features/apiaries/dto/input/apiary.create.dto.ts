@@ -2,14 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
-  IsNotEmpty,
   IsOptional,
   IsString,
   Length,
 } from 'class-validator';
 import { ApiaryType } from '../../../../domain/apiary';
 
-export class CreateApiaryDto {
+export class ApiaryCreateDto {
   @ApiProperty()
   @IsString()
   @IsEnum(ApiaryType)

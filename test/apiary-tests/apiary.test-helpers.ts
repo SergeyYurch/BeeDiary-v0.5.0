@@ -1,4 +1,4 @@
-import { CreateApiaryDto } from '../../src/apiary/features/apiaries/dto/input/create-apiary.dto';
+import { ApiaryCreateDto } from '../../src/apiary/features/apiaries/dto/input/apiary.create.dto';
 import { ApiaryType } from '../../src/apiary/domain/apiary';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
@@ -16,7 +16,7 @@ import { ColonyCreateDto } from '../../src/apiary/features/colonies/dto/input/co
 export class ApiaryTestHelpers {
   constructor(private app: INestApplication) {}
 
-  generateCreateApiaryDto(n): CreateApiaryDto {
+  generateCreateApiaryDto(n): ApiaryCreateDto {
     return {
       type: ApiaryType.stationary,
       createdAt: new Date().toISOString(),

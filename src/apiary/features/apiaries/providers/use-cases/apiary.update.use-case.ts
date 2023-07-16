@@ -1,15 +1,15 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ApiaryRepository } from '../apiary.repository';
-import { UpdateApiaryDto } from '../../dto/input/update-apiary.dto';
+import { ApiaryUpdateDto } from '../../dto/input/apiary.update.dto';
 import { ApiaryQueryRepository } from '../apiary.query.repository';
 import { NotificationResult } from '../../../../../common/notification/notificationResult';
 
 export class UpdateApiaryCommand {
-  constructor(public apiaryId: number, public updateDto: UpdateApiaryDto) {}
+  constructor(public apiaryId: number, public updateDto: ApiaryUpdateDto) {}
 }
 
 @CommandHandler(UpdateApiaryCommand)
-export class UpdateApiaryUseCase
+export class ApiaryUpdateUseCase
   implements ICommandHandler<UpdateApiaryCommand>
 {
   constructor(

@@ -1,9 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateApiaryDto } from './create-apiary.dto';
+import { ApiaryCreateDto } from './apiary.create.dto';
 import { ApiaryType } from '../../../../domain/apiary';
 import { IsDateString, IsEnum, IsString, Length } from 'class-validator';
 
-export class UpdateApiaryDto extends PartialType(CreateApiaryDto) {
+export class ApiaryUpdateDto extends PartialType(ApiaryCreateDto) {
   @ApiProperty()
   @IsString()
   @IsEnum(ApiaryType)
