@@ -115,14 +115,14 @@ export class ApiaryTestHelpers {
   }
 
   async createApiary(
-    accessTokens: string,
+    accessToken: string,
     n: number,
   ) /*:Promise<ApiaryViewModel>*/ {
     const createdApiaryDto = this.generateCreateApiaryDto(n);
 
     return request(this.app.getHttpServer())
       .post('/apiaries')
-      .auth(accessTokens, { type: 'bearer' })
+      .auth(accessToken, { type: 'bearer' })
       .send(createdApiaryDto)
       .expect(HttpStatus.CREATED);
   }
