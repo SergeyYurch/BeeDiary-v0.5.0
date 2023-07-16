@@ -29,7 +29,11 @@ import { ColonyOwnerGuard } from '../features/colonies/guards/colony-owner.guard
 import { ColonyIdGuard } from '../features/colonies/guards/colony-id.guard';
 import { ColonyUpdateCommand } from '../features/colonies/providers/use-cases/colony.update.use-case';
 import { ColonyDeleteCommand } from '../features/colonies/providers/use-cases/colony.delete.use-case';
+import { ApiTags } from '@nestjs/swagger';
+import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
 
+@ApiTags('colonies')
+@UseGuards(AccessTokenUGuard)
 @Controller('colonies')
 export class ColonyController
   implements
@@ -47,6 +51,7 @@ export class ColonyController
     @CurrentUserModel() user: User,
   ): Promise<ColonyViewModel> {
     console.log('[ColonyController]:POST - create colony');
+    console.log(user);
     const notificationRes: NotificationResult = await this.commandBus.execute(
       new ColonyCreateCommand(createDto, user),
     );
