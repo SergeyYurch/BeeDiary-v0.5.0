@@ -13,7 +13,13 @@ import {
 } from '@nestjs/common';
 import { ApiaryCreateDto } from '../features/apiaries/dto/input/apiary.create.dto';
 import { ApiaryUpdateDto } from '../features/apiaries/dto/input/apiary.update.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateApiaryCommand } from '../features/apiaries/providers/use-cases/apiary.create.use-case';
 import { AccessTokenUGuard } from '../../account/guards/access-token-u.guard';
@@ -31,6 +37,7 @@ import { ApiaryOwnerGuard } from '../guards/apiary-owner.guard';
 import { BaseControllerInterface } from '../../common/interfaces/baseControllerInterface';
 import { PaginatorViewModel } from '../../common/dto/view-models/paginator.view.model';
 
+@ApiBearerAuth()
 @ApiTags('apiary')
 @UseGuards(AccessTokenUGuard)
 @Controller('apiaries')
@@ -43,6 +50,22 @@ export class ApiariesController
     private readonly commandBus: CommandBus,
   ) {}
 
+  @ApiOperation({ summary: 'Create apiary' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Apiary was created',
+    type: ApiaryViewModel,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'If input data is incorrect',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  @ApiBody({ type: ApiaryCreateDto })
   @Post()
   async create(
     @Body() createApiaryDto: ApiaryCreateDto,
