@@ -39,6 +39,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MailService } from '../common/mail.service/mail.service';
 import { JwtService } from '@nestjs/jwt';
 import { AccessTokenUStrategy } from './strategies/access-token-u.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
+
 const userEntities = [
   UserEntity,
   DeviceSessionsEntity,
@@ -122,6 +124,7 @@ const securityUseCases = [
 
     BasicStrategy,
     LocalStrategy,
+    GoogleStrategy,
     RefreshTokenStrategy,
     AccessTokenStrategy,
     AccessTokenUStrategy,

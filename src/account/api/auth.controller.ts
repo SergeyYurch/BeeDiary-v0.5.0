@@ -1,18 +1,20 @@
 import {
   Body,
   Controller,
+  Get,
+  Headers,
+  HttpCode,
+  HttpStatus,
   Ip,
   Post,
-  Headers,
-  Res,
-  Get,
-  UseGuards,
+  Query,
   Req,
-  HttpCode,
+  Res,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { LoginInputModel } from '../features/auth/dto/login.input.model';
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
 import { AccessTokenGuard } from '../guards/access-token.guard';
 import { RefreshTokenGuard } from '../guards/refresh-token.guard';
 import { UserInputModel } from '../features/users/dto/input-models/user-input-model';
@@ -34,6 +36,7 @@ import { PasswordRecoveryCommand } from '../features/auth/providers/use-cases/pa
 import { SetNewPasswordCommand } from '../features/auth/providers/use-cases/set-new-password-use-case';
 import { UsersQueryTypeormRepository } from '../features/users/providers/users.query-typeorm.repository';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { GoogleOauthGuard } from '../guards/google-oauth.guard';
 
 @ApiTags('auth')
 @UseGuards(ThrottlerGuard)
@@ -43,6 +46,32 @@ export class AuthController {
     private usersQueryRepository: UsersQueryTypeormRepository,
     private commandBus: CommandBus,
   ) {}
+
+  @Get('google')
+  @UseGuards(GoogleOauthGuard)
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  async googleAuth() {}
+  @Get('google')
+  async googleOAuth(@Query() query: any) {
+    console.log('oauth/google');
+    const code = query.code;
+  }
+
+  @Get('google/callback')
+  @UseGuards(GoogleOauthGuard)
+  async googleAuthCallback(@Req() req, @Res() res: Response) {
+    console.log('googleAuthCallback');
+    console.log(req.user);
+    // const token = await this.authService.signIn(req.user);
+
+    // res.cookie('access_token', token, {
+    //   maxAge: 2592000000,
+    //   sameSite: true,
+    //   secure: false,
+    // });
+
+    return res.status(HttpStatus.OK);
+  }
 
   @ApiBearerAuth()
   @SkipThrottle()
@@ -55,7 +84,6 @@ export class AuthController {
     }
     return result;
   }
-
   // @UseGuards(LocalAuthGuard)
   @SkipThrottle()
   @HttpCode(200)
