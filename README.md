@@ -86,6 +86,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For questions or support, please contact us at contact@beediaryapp.com.
+For questions or support, please contact us at sergey.yurchenko.art@gamil.com.
 
 Happy Beekeeping! 🐝🍯
